@@ -33,6 +33,6 @@ will be added here.
 
 
 ### Acknowledgements
-This codebase is based on ***Multi-Label Image Recognition with Graph Convolutional Networks*** ([Paper](https://arxiv.org/abs/1904.03582), [Code](https://github.com/Megvii-Nanjing/ML-GCN)) 
+This code is based on ***Multi-Label Image Recognition with Graph Convolutional Networks*** ([Paper](https://arxiv.org/abs/1904.03582), [Code](https://github.com/Megvii-Nanjing/ML-GCN)) 
 
 
