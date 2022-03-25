@@ -14,12 +14,21 @@ This code requires Python 3.8.12. Install the following packages:
 
 ## 2. Training and evaluation code
 
-#### trainval on Pascal VOC 2007
+Training and evaluation options:
+- `lr`: learning rate
+- `lrp`: factor for learning rate of pretrained layers. The learning rate of the pretrained layers is `lr * lrp`
+- `batch-size`: number of images per batch
+- `image-size`: size of the image
+- `epochs`: number of training epochs
+- `evaluate`: evaluate model on validation set
+- `resume`: path to checkpoint
+
+For trainval on Pascal VOC 2007, run:
 ```sh
 python3 demo_voc2007_gcn.py data/voc --image-size 448 --batch-size 4
 ``` 
 
-#### trainval on COCO 2014
+For trainval on COCO 2014, run:
 ```sh
 python3 demo_coco_gcn.py data/coco --image-size 448 --batch-size 8
 ```
