@@ -34,7 +34,7 @@ For trainval on COCO 2014, run:
 python3 demo_coco_gcn.py data/coco --image-size 448 --batch-size 8
 ```
 
-## 2. Evaluation code
+## 2b Evaluation code
 For testing on Pascal VOC 2007, run:
 ```sh
 python3 demo_coco_gcn.py data/coco --image-size 448 --resume checkpoint/coco/model_best_80.2723.pth.tar --evaluate
@@ -62,6 +62,6 @@ will be added here.
 will be added here.
 
 ### Acknowledgements
-This code is based on ***Multi-Label Image Recognition with Graph Convolutional Networks*** ([Paper](https://arxiv.org/abs/1904.03582), [Code](https://github.com/Megvii-Nanjing/ML-GCN)) 
+This code is based on ***Multi-Label Image Recognition with Graph Convolutional Networks*** ([Paper](https://arxiv.org/abs/1904.03582), [Code](https://github.com/Megvii-Nanjing/ML-GCN)). Fork of https://github.com/kprokofi/ML-GCN with updated code.
 
 
