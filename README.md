@@ -12,7 +12,7 @@ This code requires Python 3.8.12. Install the following packages:
 - torchvision-0.9.2
 - tqdm
 
-## 2. Training and evaluation code
+## 2a. Training code
 
 Training and evaluation options:
 - `lr`: learning rate
@@ -32,6 +32,23 @@ For trainval on COCO 2014, run:
 ```sh
 python3 demo_coco_gcn.py data/coco --image-size 448 --batch-size 8
 ```
+
+## 2. Evaluation code
+For testing on Pascal VOC 2007, run:
+```sh
+python3 demo_coco_gcn.py data/coco --image-size 448 --resume checkpoint/coco/model_best_80.2723.pth.tar --evaluate
+```
+
+For testing on COCO 2014, run:
+```sh
+python3 demo_voc2007_gcn.py data/voc --image-size 448 --resume checkpoint/voc2007/model_best_91.8316.pth.tar --evaluate
+```
+
+| Method    | COCO    |VOC2007  |
+|:---------:|:-------:|:-------:|
+| Res-101 GAP  | 77.3    |   56.9   |
+| Ours        |  83.0  | 62.5   |
+
 
 ## 3. Pre-trained models
 will be added here.
