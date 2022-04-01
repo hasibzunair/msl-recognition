@@ -1,7 +1,9 @@
 # Custom
 
+data/
 datasets/
 logs/
+checkpoint/
 
 .DS_Store
 
