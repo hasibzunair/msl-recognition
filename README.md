@@ -37,12 +37,12 @@ python3 demo_coco_gcn.py data/coco --image-size 448 --batch-size 8
 ## 2b Evaluation code
 For testing on Pascal VOC 2007, run:
 ```sh
-python3 demo_coco_gcn.py data/coco --image-size 448 --resume checkpoint/coco/model_best_80.2723.pth.tar --evaluate
+python3 demo_voc2007_gcn.py data/voc --image-size 448 --resume checkpoint/voc2007/model_best_91.8316.pth.tar --evaluate
 ```
 
 For testing on COCO 2014, run:
 ```sh
-python3 demo_voc2007_gcn.py data/voc --image-size 448 --resume checkpoint/voc2007/model_best_91.8316.pth.tar --evaluate
+python3 demo_coco_gcn.py data/coco --image-size 448 --resume checkpoint/coco/model_best_80.2723.pth.tar --evaluate
 ```
 
 | Method    | COCO    |VOC2007  |
