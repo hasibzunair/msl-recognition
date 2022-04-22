@@ -103,7 +103,6 @@ For ResNet with CutMix,
 CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --num_cls 80  --load_from checkpoint/rescm_coco/epoch_30.pth --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
-
 ## 3. Pre-trained models
 will be added here.
 
