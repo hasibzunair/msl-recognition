@@ -46,7 +46,9 @@ which will automatically result in annotation json files in *./data/voc07*, *./d
 ### VOC2007
 
 For ViT,
-`CUDA_VISIBLE_DEVICES=0 python main.py --exp_name vitl_voc --model vit_L16_224 --img_size 224 --batch_size 8 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20`
+```shell
+CUDA_VISIBLE_DEVICES=0 python main.py --exp_name vitl_voc --model vit_L16_224 --img_size 224 --batch_size 8 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
+```
 
 For ResNet,
 `CUDA_VISIBLE_DEVICES=0 python main.py --exp_name res_voc --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20`
