@@ -1,28 +1,13 @@
-## Object recognition with GCNs
+## Context Guided Image Recognition
 
 [doc](https://docs.google.com/document/d/1yKBVNr90n2kipyQP4itzt3zvdUfGeSTm2qZ-MJNa8sg/edit?usp=sharing)
 
 
 ## 1. Specification of dependencies
 
-This code requires Python 3.8.12. Install the following packages:
-
-- numpy
-- torchnet
-- torch-1.8.2
-- torchvision-0.9.2
-- tqdm
+This code requires Python 3.8.12. Run `conda env create -f env.yml` to install the required packages
 
 ## 2a. Training code
-
-Training and evaluation options:
-- `lr`: learning rate
-- `lrp`: factor for learning rate of pretrained layers. The learning rate of the pretrained layers is `lr * lrp`
-- `batch-size`: number of images per batch
-- `image-size`: size of the image
-- `epochs`: number of training epochs
-- `evaluate`: evaluate model on validation set
-- `resume`: path to checkpoint
 
 For trainval on Pascal VOC 2007, run:
 ```sh
@@ -45,11 +30,6 @@ For testing on COCO 2014, run:
 python3 demo_coco_gcn.py data/coco --image-size 448 --resume checkpoint/coco/model_best_80.2723.pth.tar --evaluate
 ```
 
-| Method    | COCO    |VOC2007  |
-|:---------:|:-------:|:-------:|
-| Res-101 GAP  | 77.3    |   56.9   |
-| Ours        |  83.0  | 62.5   |
-
 
 ## 3. Pre-trained models
 will be added here.
@@ -62,6 +42,5 @@ will be added here.
 will be added here.
 
 ### Acknowledgements
-This code is based on ***Multi-Label Image Recognition with Graph Convolutional Networks*** ([Paper](https://arxiv.org/abs/1904.03582), [Code(https://github.com/Megvii-Nanjing/ML-GCN)). Fork of https://github.com/kprokofi/ML-GCN with updated code.
-
+This code is based on ***Residual Attention: A Simple But Effective Method for Multi-Label Recoginition*** ([Paper](https://arxiv.org/abs/2108.02456), [Code(https://github.com/Kevinz-code/CSRA)).
 
