@@ -62,6 +62,6 @@ will be added here.
 will be added here.
 
 ### Acknowledgements
-This code is based on ***Multi-Label Image Recognition with Graph Convolutional Networks*** ([Paper](https://arxiv.org/abs/1904.03582), [Code](https://github.com/Megvii-Nanjing/ML-GCN)). Fork of https://github.com/kprokofi/ML-GCN with updated code.
+This code is based on ***Multi-Label Image Recognition with Graph Convolutional Networks*** ([Paper](https://arxiv.org/abs/1904.03582), [Code(https://github.com/Megvii-Nanjing/ML-GCN)). Fork of https://github.com/kprokofi/ML-GCN with updated code.
 
 
