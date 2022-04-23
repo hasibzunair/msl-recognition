@@ -110,5 +110,5 @@ utils/demo_images/000002.jpg prediction: train,
 will be added here.
 
 ### Acknowledgements
-This code is based on ***Residual Attention: A Simple But Effective Method for Multi-Label Recoginition*** ([Paper](https://arxiv.org/abs/2108.02456), [Code(https://github.com/Kevinz-code/CSRA)).
+This code is based on ***Residual Attention: A Simple But Effective Method for Multi-Label Recoginition*** ([Paper](https://arxiv.org/abs/2108.02456), [Code](https://github.com/Kevinz-code/CSRA)).
 
