@@ -5,7 +5,15 @@
 
 ## 1. Specification of dependencies
 
-This code requires Python 3.8.12 and CUDA 11.2. Run `conda env create -f env.yml` to install the required packages
+This code requires Python 3.8.12 and CUDA 11.2. Major requirements:
+
+- Python 3.7
+- pytorch 1.6
+- torchvision 0.7.0
+- pycocotools 2.0
+- tqdm 4.49.0, pillow 7.2.0
+
+Run `conda env create -f env.yml` to install the required packages. 
 
 ## 2a. Training code
 
@@ -86,7 +94,17 @@ will be added here.
 
 
 ## 4. Demo
-will be added here.
+We provide prediction demos of our models. The demo images (picked from VCO2007) have already been put into *./utils/demo_images/*, you can simply run demo.py by using our CSRA models pretrained on VOC2007:
+```shell
+CUDA_VISIBLE_DEVICES=0 python demo.py --model resnet101 --num_heads 1 --lam 0.1 --dataset voc07 --load_from checkpoint/res_voc/epoch_30.pth --img_dir utils/demo_images
+```
+which will output like this:
+```shell
+utils/demo_images/000001.jpg prediction: dog,person,
+utils/demo_images/000004.jpg prediction: car,
+utils/demo_images/000002.jpg prediction: train,
+...
+```
 
 ## 5. Citation
 will be added here.
