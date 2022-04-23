@@ -90,7 +90,14 @@ CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --nu
 ```
 
 ## 3. Pre-trained models
-will be added here.
+
+Will be added here.
+
+<!-- We provide pretrained models on [Google Drive](https://www.google.com/drive/) for validation. ResNet101 trained on ImageNet with **CutMix** augmentation can be downloaded 
+[here](https://drive.google.com/u/0/uc?export=download&confirm=kYfp&id=1T4AxsAO2tszvhn62KFN5kaknBtBZIpDV).
+|Dataset      | Backbone  |   Head nums   |   mAP(%)  |  Resolution     | Download   |
+|  ---------- | -------   |  :--------:   | ------ |  :---:          | --------   |
+| VOC2007     |ResNet-101 |     1         |  94.7  |  448x448 |[download](https://drive.google.com/u/0/uc?export=download&confirm=bXcv&id=1cQSRI_DWyKpLa0tvxltoH9rM4IZMIEWJ)   | -->
 
 
 ## 4. Demo
