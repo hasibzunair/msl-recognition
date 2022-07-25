@@ -13,7 +13,7 @@ This code requires Python 3.8.12 and CUDA 11.2. Major requirements:
 - pycocotools 2.0
 - tqdm 4.49.0, pillow 7.2.0
 
-Run `conda env create -f env.yml` to install the required packages. 
+Run `conda env create -f environment.yml` to install the required packages. 
 
 ## 2a. Training code
 
