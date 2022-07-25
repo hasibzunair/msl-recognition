@@ -5,15 +5,13 @@
 
 ## 1. Specification of dependencies
 
-This code requires Python 3.8.12 and CUDA 11.2. Major requirements:
+This code requires Python 3.8.12 and CUDA 11.2. Create and activate the following conda envrionment.
 
-- Python 3.7
-- pytorch 1.6
-- torchvision 0.7.0
-- pycocotools 2.0
-- tqdm 4.49.0, pillow 7.2.0
-
-Run `conda env create -f environment.yml` to install the required packages. 
+```
+conda update conda
+conda env create -f environment.yml
+conda activate maskrec
+```
 
 ## 2a. Training code
 
