@@ -143,4 +143,9 @@ dependencies:
   - zlib=1.2.11=h7f8727e_4
   - zstd=1.4.9=haebb681_0
   - pip:
+    - joblib==1.1.0
+    - scikit-learn==1.1.1
+    - scipy==1.9.0
+    - sklearn==0.0
+    - threadpoolctl==3.1.0
     - tqdm==4.64.0
