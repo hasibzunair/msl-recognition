@@ -58,6 +58,10 @@ For Baseline ViT, ResNet and ResNet with CutMix:
 CUDA_VISIBLE_DEVICES=0 python main.py --exp_name vitl_voc --model vit_L16_224 --img_size 224 --batch_size 8 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
 CUDA_VISIBLE_DEVICES=0 python main.py --exp_name res_voc --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20
 CUDA_VISIBLE_DEVICES=0 python main.py --exp_name rescm_voc --batch_size 8 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
+
+# new
+CUDA_VISIBLE_DEVICES=0 python main.py --exp_name res_paper_voc --batch_size 12 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20
+CUDA_VISIBLE_DEVICES=0 python main.py --exp_name rescm_paper_voc --batch_size 12 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
 ### COCO2014
