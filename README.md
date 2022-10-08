@@ -63,7 +63,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py --exp_name rescm_paper_voc --batch_size 14
 For Baseline ViT and ResNet with CutMix:
 
 ```shell
-CUDA_VISIBLE_DEVICES=0 python main.py --exp_name rescm_paper_coco --batch_size 14 --total_epoch 200 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
+CUDA_VISIBLE_DEVICES=0 python main.py --exp_name rescm_paper_coco --batch_size 14 --total_epoch 100 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
 ## 2b. Evaluation code
