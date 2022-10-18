@@ -18,7 +18,7 @@ conda activate maskrec
 ### Dataset details
 We expect VOC2007, COCO2014 and Wider-Attribute dataset to have the following structure:
 ```
-Dataset/
+datasets/
 |-- VOCdevkit/
 |---- VOC2007/
 |------ JPEGImages/
