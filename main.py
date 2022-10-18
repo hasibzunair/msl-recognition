@@ -1,7 +1,9 @@
 import argparse
 import time
+import random 
 import os
 import sys
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -106,7 +108,9 @@ def val(i, args, model, test_loader, test_file):
 
 
 def main():
-    # Reproducibility
+    ########## Reproducibility ##########
+    random.seed(0)
+    np.random.seed(0)
     os.environ['PYTHONHASHSEED'] = str(0)
     torch.manual_seed(0)
     torch.cuda.manual_seed(0)
@@ -115,16 +119,8 @@ def main():
         torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = True
     
-    # Reproducibility
-    # random.seed(0)
-    # os.environ['PYTHONHASHSEED'] = str(0)
-    # np.random.seed(0)
-    # torch.manual_seed(0)
-    # torch.cuda.manual_seed(0)
-    # if torch.cuda.is_available():
-    #     torch.backends.cudnn.deterministic = True
-    # torch.backends.cudnn.benchmark = True
-    
+
+
     # get args
     args = Args()
     
