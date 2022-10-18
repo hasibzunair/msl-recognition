@@ -1,4 +1,4 @@
-## Context Guided Image Recognition
+## MaskSup for Multi-label Image Recognition
 
 [doc](https://docs.google.com/document/d/1yKBVNr90n2kipyQP4itzt3zvdUfGeSTm2qZ-MJNa8sg/edit?usp=sharing)
 
