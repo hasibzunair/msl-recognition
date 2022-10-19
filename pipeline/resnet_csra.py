@@ -9,16 +9,12 @@ import torch.nn.functional as F
 
 
 model_urls = {
-    'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
-    'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',
-    'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
-    'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
-    'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
+    "resnet18": "https://download.pytorch.org/models/resnet18-5c106cde.pth",
+    "resnet34": "https://download.pytorch.org/models/resnet34-333f7ec4.pth",
+    "resnet50": "https://download.pytorch.org/models/resnet50-19c8e357.pth",
+    "resnet101": "https://download.pytorch.org/models/resnet101-5d3b4d8f.pth",
+    "resnet152": "https://download.pytorch.org/models/resnet152-b121ed2d.pth",
 }
-
-
-
-
 
 
 class ResNet_CSRA(ResNet):
@@ -27,16 +23,18 @@ class ResNet_CSRA(ResNet):
         34: (BasicBlock, (3, 4, 6, 3)),
         50: (Bottleneck, (3, 4, 6, 3)),
         101: (Bottleneck, (3, 4, 23, 3)),
-        152: (Bottleneck, (3, 8, 36, 3))
+        152: (Bottleneck, (3, 8, 36, 3)),
     }
 
-    def __init__(self, num_heads, lam, num_classes, depth=101, input_dim=2048, cutmix=None):
+    def __init__(
+        self, num_heads, lam, num_classes, depth=101, input_dim=2048, cutmix=None
+    ):
         self.block, self.layers = self.arch_settings[depth]
         self.depth = depth
         super(ResNet_CSRA, self).__init__(self.block, self.layers)
         self.init_weights(pretrained=True, cutmix=cutmix)
 
-        self.classifier = MHA(num_heads, lam, input_dim, num_classes) 
+        self.classifier = MHA(num_heads, lam, input_dim, num_classes)
         self.loss_func = F.binary_cross_entropy_with_logits
 
     def backbone(self, x):
@@ -49,7 +47,7 @@ class ResNet_CSRA(ResNet):
         x = self.layer2(x)
         x = self.layer3(x)
         x = self.layer4(x)
-        
+
         return x
 
     def forward_train(self, x, target):
@@ -85,9 +83,10 @@ class ResNet_CSRA(ResNet):
         except:
             logger = logging.getLogger()
             logger.info(
-                "the keys in pretrained model is not equal to the keys in the ResNet you choose, trying to fix...")
+                "the keys in pretrained model is not equal to the keys in the ResNet you choose, trying to fix..."
+            )
             state_dict = self._keysFix(model_dict, state_dict)
             self.load_state_dict(state_dict)
 
         # remove the original 1000-class fc
-        self.fc = nn.Sequential() 
+        self.fc = nn.Sequential()
