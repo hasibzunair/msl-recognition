@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 from pipeline.resnet_csra import ResNet_CSRA
 from pipeline.vit_csra import VIT_B16_224_CSRA, VIT_L16_224_CSRA, VIT_CSRA
-from pipeline.dataset import DataSet
+from pipeline.dataset import DataSetMaskSup
 from utils.evaluation.eval import evaluation
 from utils.evaluation.warmUpLR import WarmUpLR
 from helpers import Logger
@@ -51,7 +51,49 @@ def Args():
     return args
 
 
-def train(i, args, model, train_loader, optimizer, warmup_scheduler):
+# def train(i, args, model, train_loader, optimizer, warmup_scheduler):
+
+#     print("Starting training...")
+#     model.train()
+#     epoch_begin = time.time()
+
+#     for index, data in enumerate(train_loader):
+#         batch_begin = time.time()
+
+#         # Get image and label
+#         img = data["img"].cuda()
+#         target = data["target"].cuda()
+
+#         # Compute loss
+#         optimizer.zero_grad()
+#         logit, loss = model(img, target)
+#         loss = loss.mean()
+
+#         # Update
+#         loss.backward()
+#         optimizer.step()
+
+#         t = time.time() - batch_begin
+#         if index % args.print_freq == 0:
+#             print(
+#                 "Epoch {}[{}/{}]: loss:{:.5f}, lr:{:.5f}, time:{:.4f}".format(
+#                     i,
+#                     args.batch_size * (index + 1),
+#                     len(train_loader.dataset),
+#                     loss,
+#                     optimizer.param_groups[0]["lr"],
+#                     float(t),
+#                 )
+#             )
+
+#         if warmup_scheduler and i <= args.warmup_epoch:
+#             warmup_scheduler.step()
+
+#     t = time.time() - epoch_begin
+#     print("Epoch {} training ends, total {:.2f}s".format(i, t))
+
+
+def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
 
     print("Starting training...")
     model.train()
@@ -60,14 +102,56 @@ def train(i, args, model, train_loader, optimizer, warmup_scheduler):
     for index, data in enumerate(train_loader):
         batch_begin = time.time()
 
-        # Get image and label
+        # Get image, masked image and label
         img = data["img"].cuda()
+        masked_img = data["masked_img"].cuda()
         target = data["target"].cuda()
 
-        # Compute loss
+        ### For debugging
+        # import torch 
+        # import numpy as np 
+        # import matplotlib.pyplot as plt
+        # def unnormalize(tensor, mean, std):
+        #     for t, m, s in zip(tensor, mean, std):
+        #         t.mul_(s).add_(m)
+        #     return tensor
+        # def to_img_(ten):
+        #     curr_img = ten.detach().to(torch.device('cpu'))
+        #     curr_img = unnormalize(curr_img,
+        #                         torch.tensor([0, 0, 0]), # mean and std
+        #                         torch.tensor([1, 1, 1])) 
+        #     curr_img = curr_img.permute((1, 2, 0))
+        #     return curr_img
+
+        # img = to_img_(img[0])
+        # plt.imshow(img); plt.show()
+
+        #### Compute loss ####
         optimizer.zero_grad()
-        logit, loss = model(img, target)
-        loss = loss.mean()
+
+        # Original branch
+        logit1, loss1 = model(img, target)
+        loss1 = loss1.mean()
+
+        # Masked branch
+        logit2, loss2 = model(masked_img, target)
+        loss2 = loss2.mean()
+
+        # Maximize similarity of two branches
+        pred1 = torch.sigmoid(logit1.float())
+        pred2 = torch.sigmoid(logit2.float())
+        loss3 = criterion_mse(pred1, pred2)
+
+        import ipdb; ipdb.set_trace()
+        
+        # Compute total loss
+        # Loss coefficients
+        alpha = 1
+        beta = 1
+        gamma = 1
+
+        # Total loss
+        loss = alpha * loss1 + beta * loss2 + gamma * loss3
 
         # Update
         loss.backward()
@@ -191,8 +275,8 @@ def main():
         step_size = 5
         args.train_aug = ["randomflip"]
 
-    train_dataset = DataSet(train_file, args.train_aug, args.img_size, args.dataset)
-    test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset)
+    train_dataset = DataSetMaskSup(train_file, args.train_aug, args.img_size, args.dataset)
+    test_dataset = DataSetMaskSup(test_file, args.test_aug, args.img_size, args.dataset)
     train_loader = DataLoader(
         train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=8
     )
@@ -200,7 +284,12 @@ def main():
         test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8
     )
 
-    ########## Setup optimizer and warmup ##########
+    ########## Setup loss, optimizer and warmup ##########
+    
+    # loss for maximimizing similarity between predictions from two branches
+    global criterion_mse 
+    criterion_mse = nn.MSELoss()
+
     backbone, classifier = [], []
     for name, param in model.named_parameters():
         if "classifier" in name:
@@ -225,7 +314,7 @@ def main():
 
     ########## Training and evaluation loop ##########
     for i in range(1, args.total_epoch + 1):
-        train(i, args, model, train_loader, optimizer, warmup_scheduler)
+        train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler)
         torch.save(
             model.state_dict(), "checkpoint/{}/epoch_{}.pth".format(args.exp_name, i)
         )

@@ -221,7 +221,7 @@ class DataSetMaskSup(Dataset):
                 "target": torch.Tensor(ann["target"]),
                 "img": img_area,
                 "masked_img": masked_image,
-                "scribble": scribble,
+                #"scribble": scribble,
             }
         else:  # voc and coco
             img = self.augment(img)
@@ -233,7 +233,7 @@ class DataSetMaskSup(Dataset):
                 "target": torch.Tensor(ann["target"]),
                 "img": img,
                 "masked_img": masked_image,
-                "scribble": scribble,
+                #"scribble": scribble,
             }
 
         return message
