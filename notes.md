@@ -33,6 +33,4 @@ CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --nu
 
 
 # todo
-- run cocos vit, res (done)
-- try only res on voc (CUDA_VISIBLE_DEVICES=0 python main.py --exp_name res_voc --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20)
-- open new repo
+- do cool stuff
