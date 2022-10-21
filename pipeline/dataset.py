@@ -149,7 +149,7 @@ class DataSetMaskSup(Dataset):
 
         # scribbles
         self._scribbles_folder = "./datasets/SCRIBBLES"
-        self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[
+        self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[::-1][
             :1000
         ]  # for heavy masking [::-1]
 
@@ -204,7 +204,7 @@ class DataSetMaskSup(Dataset):
         scribble = preprocess_scribble(scribble)
         
         # todo, try without this
-        scribble = (scribble > 0).float() # threshold to [0,1]
+        #scribble = (scribble > 0).float() # threshold to [0,1]
         inv_scribble = (torch.max(scribble) - scribble) # inverted scribble
 
         if self.dataset == "wider":
