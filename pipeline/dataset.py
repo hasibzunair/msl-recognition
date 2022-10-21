@@ -149,7 +149,7 @@ class DataSetMaskSup(Dataset):
 
         # scribbles
         self._scribbles_folder = "./datasets/SCRIBBLES"
-        self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[::-1][
+        self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[
             :1000
         ]  # for heavy masking [::-1]
 
