@@ -142,7 +142,7 @@ def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
         pred2 = torch.sigmoid(logit2.float())
         loss3 = criterion_mse(pred1, pred2)
 
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         
         # Compute total loss
         # Loss coefficients
