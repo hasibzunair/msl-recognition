@@ -37,7 +37,7 @@ class ResNet_CSRA(ResNet):
         self.classifier = MHA(num_heads, lam, input_dim, num_classes)
         self.loss_func = F.binary_cross_entropy_with_logits
         # todo
-        # criterion = (nn.BCEWithLogitsLoss())  # loss combines a Sigmoid layer and the BCELoss in one single class
+        # criterion = nn.BCEWithLogitsLoss()  # loss combines a Sigmoid layer and the BCELoss in one single class
 
     def backbone(self, x):
         x = self.conv1(x)

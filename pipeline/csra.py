@@ -23,6 +23,7 @@ class CSRA(nn.Module): # one basic block
             att_logit = torch.max(score, dim=2)[0]
         else:
             score_soft = self.softmax(score * self.T)
+            # https://github.com/Kevinz-code/CSRA/issues/5
             att_logit = torch.sum(score * score_soft, dim=2)
 
         return base_logit + self.lam * att_logit

@@ -51,48 +51,6 @@ def Args():
     return args
 
 
-# def train(i, args, model, train_loader, optimizer, warmup_scheduler):
-
-#     print("Starting training...")
-#     model.train()
-#     epoch_begin = time.time()
-
-#     for index, data in enumerate(train_loader):
-#         batch_begin = time.time()
-
-#         # Get image and label
-#         img = data["img"].cuda()
-#         target = data["target"].cuda()
-
-#         # Compute loss
-#         optimizer.zero_grad()
-#         logit, loss = model(img, target)
-#         loss = loss.mean()
-
-#         # Update
-#         loss.backward()
-#         optimizer.step()
-
-#         t = time.time() - batch_begin
-#         if index % args.print_freq == 0:
-#             print(
-#                 "Epoch {}[{}/{}]: loss:{:.5f}, lr:{:.5f}, time:{:.4f}".format(
-#                     i,
-#                     args.batch_size * (index + 1),
-#                     len(train_loader.dataset),
-#                     loss,
-#                     optimizer.param_groups[0]["lr"],
-#                     float(t),
-#                 )
-#             )
-
-#         if warmup_scheduler and i <= args.warmup_epoch:
-#             warmup_scheduler.step()
-
-#     t = time.time() - epoch_begin
-#     print("Epoch {} training ends, total {:.2f}s".format(i, t))
-
-
 def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
 
     print("Starting training...")
@@ -142,18 +100,24 @@ def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
         pred2 = torch.sigmoid(logit2.float())
         loss3 = criterion_mse(pred1, pred2)
 
-        #import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         
         # Compute total loss
         # Loss coefficients
-        alpha = 1
-        beta = 1
-        gamma = 1
+        alpha = 0.3
+        beta = 0.2
+        gamma = 0.5
+        
+        # 0.4,0.4,0.2 -> works best so far 94.5 mAP
+        # 0.3,0.3,0.4 -> 
+
+        # todoo
+        # try 0.3, 0.2, 0.5
 
         # Total loss
         loss = alpha * loss1 + beta * loss2 + gamma * loss3
 
-        # Update
+        #### Update ####
         loss.backward()
         optimizer.step()
 
