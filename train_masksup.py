@@ -108,11 +108,11 @@ def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
         beta = 0.2
         gamma = 0.5
         
-        # 0.4,0.4,0.2 -> works best so far 94.5 mAP
-        # 0.3,0.3,0.4 -> 
+        # 0.4,0.4,0.2 -> 94.5 mAP
+        # 0.3,0.2,0.5 -> 95.2 mAP!!!
 
         # todoo
-        # try 0.3, 0.2, 0.5
+        # ...
 
         # Total loss
         loss = alpha * loss1 + beta * loss2 + gamma * loss3
