@@ -69,7 +69,13 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_rescm_voc --ba
 For Baseline ResNet with CutMix:
 
 ```shell
-CUDA_VISIBLE_DEVICES=0 python train.py --exp_name rescm_paper_coco --batch_size 14 --total_epoch 100 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name rescm_paper_coco --batch_size 6 --total_epoch 60 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
+```
+
+For MaskSup ResNet with CutMix: 
+
+```
+CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup01_0.3,0.2,0.5_rescm_coco --batch_size 6 --total_epoch 60 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
 ## 2b. Evaluation code
