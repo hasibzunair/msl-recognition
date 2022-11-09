@@ -55,7 +55,7 @@ which will automatically result in annotation json files in *./data/voc07*, *./d
 For Baseline ResNet with CutMix:
 
 ```shell
-CUDA_VISIBLE_DEVICES=0 python train.py --exp_name rescm_paper_voc --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name base_rescm_voc --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
 For MaskSup ResNet with CutMix: 
