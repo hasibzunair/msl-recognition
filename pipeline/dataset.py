@@ -149,13 +149,16 @@ class DataSetMaskSup(Dataset):
 
         # scribbles
         self._scribbles_folder = "./datasets/SCRIBBLES"
+        
+        # for easy masks
         # self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[
         #     :1000
         # ]
 
+        # for hard masks
         self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[::-1][
             :1000
-        ] # for heavy masking [::-1]
+        ]
 
         # in wider dataset we use vit models
         # so transformation has been changed
