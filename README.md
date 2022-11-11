@@ -64,12 +64,12 @@ For MaskSup ResNet with CutMix:
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_rescm_voc --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
-For Baseline ViT (WIP)
+For Baseline ViT
 ```
-CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_voc --model vit_L16_224 --img_size 224 --batch_size 6 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_voc_base --model vit_L16_224 --img_size 224 --batch_size 6 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
 ```
 
-For MaskSup ViT (WIP)
+For MaskSup ViT
 ```
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_voc --model vit_L16_224 --img_size 224 --batch_size 6 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
 ```
