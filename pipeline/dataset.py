@@ -112,11 +112,11 @@ class DataSet(Dataset):
         # }
 
 
-def preprocess_scribble(img):
+def preprocess_scribble(img, img_size):
     transform = transforms.Compose(
         [
-            transforms.Resize(448, BICUBIC),
-            transforms.CenterCrop(448),
+            transforms.Resize(img_size, BICUBIC),
+            transforms.CenterCrop(img_size),
             #_convert_image_to_rgb,
             transforms.ToTensor(),
         ]
@@ -137,6 +137,7 @@ class DataSetMaskSup(Dataset):
     ):
         self.dataset = dataset
         self.ann_files = ann_files
+        self.img_size = img_size
         self.augment = self.augs_function(augs, img_size)
         self.transform = transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize(mean=[0, 0, 0], std=[1, 1, 1])]
@@ -208,7 +209,7 @@ class DataSetMaskSup(Dataset):
                 random.randint(0, 950)
             ]
         scribble = Image.open(scribble_path).convert('P')
-        scribble = preprocess_scribble(scribble)
+        scribble = preprocess_scribble(scribble, self.img_size)
         
         # todo, try without this
         scribble = (scribble > 0).float() # threshold to [0,1]
