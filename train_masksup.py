@@ -15,6 +15,7 @@ from tqdm import tqdm
 from pipeline.resnet_csra import ResNet_CSRA
 from pipeline.vit_csra import VIT_B16_224_CSRA, VIT_L16_224_CSRA, VIT_CSRA
 from pipeline.dataset import DataSetMaskSup
+from pipeline.losses import AsymmetricLoss
 from utils.evaluation.eval import evaluation
 from utils.evaluation.warmUpLR import WarmUpLR
 from helpers import Logger
@@ -98,15 +99,18 @@ def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
         # Maximize similarity of two branches
         pred1 = torch.sigmoid(logit1.float())
         pred2 = torch.sigmoid(logit2.float())
-        loss3 = criterion_mse(pred1, pred2)
+        # MSE
+        #loss3 = criterion_mse(pred1, pred2)
+        # ASL
+        loss3 = criterion_asl(pred1, pred2)
 
-        # import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         
         # Compute total loss
         # Loss coefficients
-        alpha = 0.3
-        beta = 0.2
-        gamma = 0.5
+        alpha = 1 #0.3
+        beta = 1 #0.2
+        gamma = 1 #0.5
         
         # VOC
         # 0.4,0.4,0.2 -> 94.5 mAP
@@ -258,6 +262,10 @@ def main():
     # loss for maximimizing similarity between predictions from two branches
     global criterion_mse 
     criterion_mse = nn.MSELoss()
+
+    global criterion_asl
+    criterion_asl = AsymmetricLoss(gamma_neg=4, gamma_pos=0, clip=0.05, disable_torch_grad_focal_loss=True)
+
 
     backbone, classifier = [], []
     for name, param in model.named_parameters():
