@@ -108,21 +108,10 @@ def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
         
         # Compute total loss
         # Loss coefficients
-        alpha = 1 #0.3
-        beta = 1 #0.2
-        gamma = 1 #0.5
+        alpha = 0.4
+        beta = 0.4
+        gamma = 0.2
         
-        # VOC
-        # 0.4,0.4,0.2 -> 94.5 mAP
-        # 0.3,0.2,0.5 -> 95.2 mAP!!!
-
-        # COCO
-        # base 84.3
-        # 0.3,0.2,0.5 -> 85.33 mAP
-
-        # todoo
-        # ...
-
         # Total loss
         loss = alpha * loss1 + beta * loss2 + gamma * loss3
 
