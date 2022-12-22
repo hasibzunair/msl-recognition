@@ -92,7 +92,7 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup01_0.3,0.2,0.5_
 
 ### VOC2007
 
-For Baseline ViT, ResNet and ResNet with CutMix:
+For Baseline ResNet with CutMix:
 ```shell
 CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20  --load_from checkpoint/voc_experiments/rescm_paper_voc/epoch_200.pth --cutmix data/resnet101_cutmix_pretrained.pth
 ```
@@ -112,7 +112,7 @@ TBA.
 
 We provide prediction demos of our models. The demo images (picked from VCO2007) have already been put into *./utils/demo_images/*, you can simply run demo.py by using our CSRA models pretrained on VOC2007:
 ```shell
-CUDA_VISIBLE_DEVICES=0 python demo.py --model resnet101 --num_heads 1 --lam 0.1 --dataset voc07 --load_from checkpoint/res_voc/epoch_30.pth --img_dir utils/demo_images
+CUDA_VISIBLE_DEVICES=0 python demo.py --model resnet101 --num_heads 1 --lam 0.1 --dataset voc07 --load_from PATH_TO_YOUR_RESNET_MODEL --img_dir utils/demo_images
 ```
 which will output like this:
 ```shell
@@ -128,5 +128,5 @@ TBA.
 
 ### Acknowledgements
 
-This code is based on ***Residual Attention: A Simple But Effective Method for Multi-Label Recoginition*** ([Paper](https://arxiv.org/abs/2108.02456), [Code](https://github.com/Kevinz-code/CSRA)). We thank authors for making their code public! 
+This code is based on ***Residual Attention: A Simple But Effective Method for Multi-Label Recoginition*** ([Paper](https://arxiv.org/abs/2108.02456), [Code](https://github.com/Kevinz-code/CSRA)). We thank authors for making their code public! :D 
 
