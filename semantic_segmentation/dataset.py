@@ -88,6 +88,7 @@ class NYUDV2_dataloader(Dataset):
         scribble = transforms_mask(scribble)
 
         # Masked image
+        scribble = (scribble > 0).float() # threshold to [0,1]. w/o is old masksup
         partial_image1 = image * (torch.max(scribble) - scribble)
         partial_image2 = image * scribble
         sample = {
@@ -176,6 +177,7 @@ class GLAS_dataloader(Dataset):
         scribble = transforms_mask(scribble)
 
         # Masked image
+        scribble = (scribble > 0).float() # threshold to [0,1]. w/o is old masksup
         partial_image1 = image * (torch.max(scribble) - scribble)
         partial_image2 = image * scribble
 
@@ -271,6 +273,7 @@ class POLYPS_dataloader(Dataset):
         scribble = transforms_mask(scribble)
 
         # Masked image
+        scribble = (scribble > 0).float() # threshold to [0,1]. w/o is also masksup
         partial_image1 = image * (torch.max(scribble) - scribble)
         partial_image2 = image * scribble
 
