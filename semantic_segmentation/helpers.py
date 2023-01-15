@@ -6,6 +6,11 @@ import numpy as np
 
 """Helper functions and classes"""
 
+def unnormalize(tensor, mean, std):
+    for t, m, s in zip(tensor, mean, std):
+        t.mul_(s).add_(m)
+    return tensor
+
 
 def mkdir_if_missing(directory):
     if not osp.exists(directory):

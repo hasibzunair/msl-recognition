@@ -10,6 +10,13 @@ import torchvision.transforms as transforms
 from PIL import Image
 from torch.utils.data import Dataset
 
+try:
+    from torchvision.transforms import InterpolationMode
+
+    BICUBIC = InterpolationMode.BICUBIC
+except ImportError:
+    BICUBIC = Image.BICUBIC
+
 
 """Dataset classes"""
 
@@ -69,7 +76,7 @@ class NYUDV2_dataloader(Dataset):
 
         transforms_image = transforms.Compose(
             [
-                transforms.Resize((224, 224)),
+                transforms.Resize((224, 224), BICUBIC),
                 transforms.CenterCrop((224, 224)),
                 transforms.ToTensor(),
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
@@ -77,7 +84,7 @@ class NYUDV2_dataloader(Dataset):
         )
         transforms_mask = transforms.Compose(
             [
-                transforms.Resize((224, 224)),
+                transforms.Resize((224, 224), BICUBIC),
                 transforms.CenterCrop((224, 224)),
                 transforms.ToTensor(),
             ]
@@ -157,7 +164,7 @@ class GLAS_dataloader(Dataset):
 
         transforms_image = transforms.Compose(
             [
-                transforms.Resize((224, 224)),
+                transforms.Resize((224, 224), BICUBIC),
                 transforms.CenterCrop((224, 224)),
                 transforms.ToTensor(),
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
@@ -165,7 +172,7 @@ class GLAS_dataloader(Dataset):
         )
         transforms_mask = transforms.Compose(
             [
-                transforms.Resize((224, 224)),
+                transforms.Resize((224, 224), BICUBIC),
                 transforms.CenterCrop((224, 224)),
                 transforms.ToTensor(),
             ]
@@ -186,6 +193,7 @@ class GLAS_dataloader(Dataset):
             "mask": mask,
             "partial_image1": partial_image1,
             "partial_image2": partial_image2,
+            "sc" : scribble
         }
         return sample
 
@@ -253,7 +261,7 @@ class POLYPS_dataloader(Dataset):
 
         transforms_image = transforms.Compose(
             [
-                transforms.Resize((224, 224)),
+                transforms.Resize((224, 224), BICUBIC),
                 transforms.CenterCrop((224, 224)),
                 transforms.ToTensor(),
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
@@ -261,7 +269,7 @@ class POLYPS_dataloader(Dataset):
         )
         transforms_mask = transforms.Compose(
             [
-                transforms.Resize((224, 224)),
+                transforms.Resize((224, 224), BICUBIC),
                 transforms.CenterCrop((224, 224)),
                 transforms.ToTensor(),
             ]

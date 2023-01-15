@@ -11,8 +11,9 @@ import torch.nn as nn
 import torch.optim as optim
 
 from torch.utils.data import DataLoader
+from PIL import Image
 
-from helpers import Logger
+from helpers import Logger, unnormalize
 from dataset import GLAS_dataloader, POLYPS_dataloader
 from metrics import calculate_metric_percase
 from models.LeViTUNet384 import Build_LeViT_UNet_384
@@ -233,9 +234,25 @@ def train_context_branch_with_task_sim(model, epoch, save_masks=True):
         # Save masked image
         if save_masks:
             masked_img = data2[0]
-            masked_img = (masked_img.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
-            masked_img = (masked_img * 255).astype(np.uint8)
-            masked_img = cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
+            masked_img = masked_img.detach().to(torch.device('cpu'))
+            masked_img = unnormalize(masked_img,
+                           torch.tensor([0.5, 0.5, 0.5]), # mean and std
+                           torch.tensor([0.5, 0.5, 0.5]))
+
+            masked_img = masked_img.permute((1, 2, 0))
+            masked_img = (masked_img.numpy()*255).astype(np.uint8)
+            masked_img = Image.fromarray(np.uint8(masked_img)).convert('RGB')
+            masked_img = masked_img.convert("RGB")
+            masked_img = np.array(masked_img)
+            masked_img=cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
+            #masked_img = (masked_img.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
+            #masked_img = masked_img.permute(1, 2, 0).detach().cpu().numpy()
+            #masked_img = (masked_img * 255).astype(np.uint8)
+            #masked_img = cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
+            #masked_img = Image.fromarray(np.uint8(masked_img)).convert('RGB')
+            #masked_img = masked_img.convert("RGB")
+            #masked_img = np.array(masked_img)
+            #masked_img=cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
             # masked_img[masked_img==127] = 0
             cv2.imwrite(
                 "{}/samples/masked_imgs_cb_ts/ep{}_b{}.png".format(
@@ -257,9 +274,9 @@ def train_context_branch_with_task_sim(model, epoch, save_masks=True):
             )
 
         # Loss coefficients
-        alpha = 1
-        beta = 1
-        gamma = 1
+        alpha = 0.3
+        beta = 0.2
+        gamma = 0.5
 
         # Total loss
         loss = alpha * loss1 + beta * loss2 + gamma * loss3
