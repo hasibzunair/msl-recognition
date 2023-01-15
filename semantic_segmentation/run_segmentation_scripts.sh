@@ -1,6 +1,6 @@
-python trainval_glas_polyp.py --exp_name glas_bin_levit
-python trainval_glas_polyp.py --exp_name polyp_bin_levit
-python trainval_nyudv2.py --exp_name nyu_bin_nestunet
+python trainval_glas_polyp.py --exp_name glas_bin_levit_thr
+python trainval_glas_polyp.py --exp_name polyp_bin_levit_thr
+python trainval_nyudv2.py --exp_name nyu_bin_nestunet_thr
 
 # https://arxiv.org/abs/2210.00923
 # Method GLaS, mIoU (↑) CVC-Clinic-DB, mIoU (↑) NYUDv2 (↑)
