@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 from torch.utils.data import DataLoader
-from PIL import Image
+from PIL import Image, ImageOps
 
 from helpers import Logger, unnormalize
 from dataset import GLAS_dataloader, POLYPS_dataloader
@@ -238,12 +238,9 @@ def train_context_branch_with_task_sim(model, epoch, save_masks=True):
             masked_img = unnormalize(masked_img,
                            torch.tensor([0.5, 0.5, 0.5]), # mean and std
                            torch.tensor([0.5, 0.5, 0.5]))
-
             masked_img = masked_img.permute((1, 2, 0))
             masked_img = (masked_img.numpy()*255).astype(np.uint8)
             masked_img = Image.fromarray(np.uint8(masked_img)).convert('RGB')
-            masked_img = masked_img.convert("RGB")
-            masked_img = np.array(masked_img)
             masked_img=cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
             #masked_img = (masked_img.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
             #masked_img = masked_img.permute(1, 2, 0).detach().cpu().numpy()
