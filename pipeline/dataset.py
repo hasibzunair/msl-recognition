@@ -212,8 +212,8 @@ class DataSetMaskSup(Dataset):
         scribble = preprocess_scribble(scribble, self.img_size)
         
         # todo, try without this
-        scribble = (scribble > 0).float() # threshold to [0,1]
-        inv_scribble = (torch.max(scribble) - scribble) # inverted scribble
+        scribble_t = (scribble > 0).float() # threshold to [0,1]
+        inv_scribble = (torch.max(scribble_t) - scribble_t) # inverted scribble      
 
         if self.dataset == "wider":
             x, y, w, h = ann["bbox"]
@@ -223,13 +223,12 @@ class DataSetMaskSup(Dataset):
 
             # masked image
             masked_image = img_area * inv_scribble
-
             message = {
                 "img_path": ann["img_path"],
                 "target": torch.Tensor(ann["target"]),
                 "img": img_area,
                 "masked_img": masked_image,
-                #"scribble": scribble,
+                #"scribble": inv_scribble,
             }
         else:  # voc and coco
             img = self.augment(img)
@@ -241,7 +240,7 @@ class DataSetMaskSup(Dataset):
                 "target": torch.Tensor(ann["target"]),
                 "img": img,
                 "masked_img": masked_image,
-                #"scribble": scribble,
+                #"scribble": inv_scribble,
             }
 
         return message
