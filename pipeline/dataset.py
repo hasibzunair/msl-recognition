@@ -211,7 +211,6 @@ class DataSetMaskSup(Dataset):
         scribble = Image.open(scribble_path).convert('P')
         scribble = preprocess_scribble(scribble, self.img_size)
         
-        # todo, try without this
         scribble_t = (scribble > 0).float() # threshold to [0,1]
         inv_scribble = (torch.max(scribble_t) - scribble_t) # inverted scribble      
 
