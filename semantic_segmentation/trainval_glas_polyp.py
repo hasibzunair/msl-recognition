@@ -271,9 +271,9 @@ def train_context_branch_with_task_sim(model, epoch, save_masks=True):
             )
 
         # Loss coefficients
-        alpha = 1
-        beta = 1
-        gamma = 1
+        alpha = 0.5
+        beta = 0.2
+        gamma = 0.3
 
         # Total loss
         loss = alpha * loss1 + beta * loss2 + gamma * loss3
