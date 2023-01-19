@@ -239,7 +239,7 @@ class DataSetMaskSup(Dataset):
                 "target": torch.Tensor(ann["target"]),
                 "img": img,
                 "masked_img": masked_image,
-                #"scribble": inv_scribble,
+                "scribble": inv_scribble,
             }
 
         return message

@@ -231,32 +231,32 @@ def train_context_branch_with_task_sim(model, epoch, save_masks=True):
             data["mask"].to(DEVICE),
         )
 
-        # Save masked image
-        if save_masks:
-            masked_img = data2[0]
-            masked_img = masked_img.detach().to(torch.device('cpu'))
-            masked_img = unnormalize(masked_img,
-                           torch.tensor([0.5, 0.5, 0.5]), # mean and std
-                           torch.tensor([0.5, 0.5, 0.5]))
-            masked_img = masked_img.permute((1, 2, 0))
-            masked_img = (masked_img.numpy()*255).astype(np.uint8)
-            masked_img = Image.fromarray(np.uint8(masked_img)).convert('RGB')
-            masked_img = np.array(masked_img)
-            masked_img= cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
-            #masked_img = (masked_img.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
-            #masked_img = (masked_img * 255).astype(np.uint8)
-            #masked_img = cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
-            #masked_img = Image.fromarray(np.uint8(masked_img)).convert('RGB')
-            #masked_img = masked_img.convert("RGB")
-            #masked_img = np.array(masked_img)
-            #masked_img=cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
-            # masked_img[masked_img==127] = 0
-            cv2.imwrite(
-                "{}/samples/masked_imgs_cb_ts/ep{}_b{}.png".format(
-                    LOG_PATH, epoch, batch_idx
-                ),
-                masked_img,
-            )
+        # # Save masked image
+        # if save_masks:
+        #     masked_img = data2[0]
+        #     masked_img = masked_img.detach().to(torch.device('cpu'))
+        #     masked_img = unnormalize(masked_img,
+        #                    torch.tensor([0.5, 0.5, 0.5]), # mean and std
+        #                    torch.tensor([0.5, 0.5, 0.5]))
+        #     masked_img = masked_img.permute((1, 2, 0))
+        #     masked_img = (masked_img.numpy()*255).astype(np.uint8)
+        #     masked_img = Image.fromarray(np.uint8(masked_img)).convert('RGB')
+        #     masked_img = np.array(masked_img)
+        #     masked_img= cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
+        #     #masked_img = (masked_img.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
+        #     #masked_img = (masked_img * 255).astype(np.uint8)
+        #     #masked_img = cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
+        #     #masked_img = Image.fromarray(np.uint8(masked_img)).convert('RGB')
+        #     #masked_img = masked_img.convert("RGB")
+        #     #masked_img = np.array(masked_img)
+        #     #masked_img=cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
+        #     # masked_img[masked_img==127] = 0
+        #     cv2.imwrite(
+        #         "{}/samples/masked_imgs_cb_ts/ep{}_b{}.png".format(
+        #             LOG_PATH, epoch, batch_idx
+        #         ),
+        #         masked_img,
+        #     )
 
         with torch.cuda.amp.autocast(enabled=amp):
             # Make predictions
@@ -271,9 +271,9 @@ def train_context_branch_with_task_sim(model, epoch, save_masks=True):
             )
 
         # Loss coefficients
-        alpha = 0.3
-        beta = 0.2
-        gamma = 0.5
+        alpha = 1
+        beta = 1
+        gamma = 1
 
         # Total loss
         loss = alpha * loss1 + beta * loss2 + gamma * loss3
