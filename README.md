@@ -88,6 +88,16 @@ For MaskSup ResNet with CutMix:
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup01_0.3,0.2,0.5_rescm_coco --batch_size 6 --total_epoch 60 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
+For Baseline ViT
+```
+TBA
+```
+
+For MaskSup ViT
+```
+CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_coco --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 8 --lam 1 --dataset coco --num_cls 80
+```
+
 ## 2b. Evaluation code
 
 ### VOC2007
