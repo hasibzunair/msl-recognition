@@ -90,7 +90,7 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup01_0.3,0.2,0.5_
 
 For Baseline ViT
 ```
-TBA
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_coco --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 8 --lam 1 --dataset coco --num_cls 80
 ```
 
 For MaskSup ViT
