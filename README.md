@@ -58,7 +58,7 @@ For Baseline ResNet with CutMix:
 CUDA_VISIBLE_DEVICES=0 python train.py --exp_name base_rescm_voc --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
-For MaskSup ResNet with CutMix: 
+For MSL ResNet with CutMix: 
 
 ```shell
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_rescm_voc --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
@@ -69,7 +69,7 @@ For Baseline ViT
 CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_voc_base --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
 ```
 
-For MaskSup ViT
+For MSL ViT
 ```
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_voc --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
 ```
@@ -82,7 +82,7 @@ For Baseline ResNet with CutMix:
 CUDA_VISIBLE_DEVICES=0 python train.py --exp_name rescm_paper_coco --batch_size 6 --total_epoch 60 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
-For MaskSup ResNet with CutMix: 
+For MSL ResNet with CutMix: 
 
 ```
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup01_0.3,0.2,0.5_rescm_coco --batch_size 6 --total_epoch 60 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
@@ -93,7 +93,7 @@ For Baseline ViT
 CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_coco --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 8 --lam 1 --dataset coco --num_cls 80
 ```
 
-For MaskSup ViT
+For MSL ViT
 ```
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_coco --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 8 --lam 1 --dataset coco --num_cls 80
 ```
