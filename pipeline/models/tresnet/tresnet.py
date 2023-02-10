@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 from torch.nn import Module as Module
 from collections import OrderedDict
-from src.models.tresnet.layers.anti_aliasing import AntiAliasDownsampleLayer
+from pipeline.models.tresnet.layers.anti_aliasing import AntiAliasDownsampleLayer
 from .layers.avg_pool import FastAvgPool2d
 from .layers.general_layers import SEModule, SpaceToDepthModule
 from inplace_abn import InPlaceABN, ABN
-
+import torch.nn.functional as F
 
 def InplacABN_to_ABN(module: nn.Module) -> nn.Module:
     # convert all InplaceABN layer to bit-accurate ABN layers.
@@ -145,6 +145,9 @@ class TResNet(Module):
                  do_bottleneck_head=False,bottleneck_features=512):
         super(TResNet, self).__init__()
 
+        # Loss function
+        self.loss_func = F.binary_cross_entropy_with_logits
+
         # JIT layers
         space_to_depth = SpaceToDepthModule()
         anti_alias_layer = AntiAliasDownsampleLayer
@@ -219,38 +222,61 @@ class TResNet(Module):
             block(self.inplanes, planes, use_se=use_se, anti_alias_layer=anti_alias_layer))
         return nn.Sequential(*layers)
 
-    def forward(self, x):
+    # def forward(self, x):
+    #     x = self.body(x)
+    #     self.embeddings = self.global_pool(x)
+    #     logits = self.head(self.embeddings)
+    #     return logits
+
+
+
+
+    # newly added 
+
+    # todo: forward train
+    def forward_train(self, x, target):
+        x = self.body(x)
+        self.embeddings = self.global_pool(x)
+        logits = self.head(self.embeddings)
+        loss = self.loss_func(logits, target, reduction="mean")
+        return logits, loss
+
+    # todo: forward test
+    def forward_test(self, x):
         x = self.body(x)
         self.embeddings = self.global_pool(x)
         logits = self.head(self.embeddings)
         return logits
 
+    # todo: condition for using each config
+    def forward(self, x, target=None):
+        if target is not None:
+            return self.forward_train(x, target)
+        else:
+            return self.forward_test(x)
 
-def TResnetM(model_params):
+
+def TResnetM(num_classes):
     """Constructs a medium TResnet model.
     """
     in_chans = 3
-    num_classes = model_params['num_classes']
     model = TResNet(layers=[3, 4, 11, 3], num_classes=num_classes, in_chans=in_chans)
     return model
 
 
-def TResnetL(model_params):
+def TResnetL(num_classes):
     """Constructs a large TResnet model.
     """
     in_chans = 3
-    num_classes = model_params['num_classes']
-    do_bottleneck_head = model_params['args'].do_bottleneck_head
+    do_bottleneck_head = False
     model = TResNet(layers=[4, 5, 18, 3], num_classes=num_classes, in_chans=in_chans, width_factor=1.2,
                     do_bottleneck_head=do_bottleneck_head)
     return model
 
 
-def TResnetXL(model_params):
+def TResnetXL(num_classes):
     """Constructs a xlarge TResnet model.
     """
     in_chans = 3
-    num_classes = model_params['num_classes']
     model = TResNet(layers=[4, 5, 24, 3], num_classes=num_classes, in_chans=in_chans, width_factor=1.3)
-
     return model

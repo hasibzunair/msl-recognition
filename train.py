@@ -13,6 +13,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from pipeline.resnet_csra import ResNet_CSRA
+from pipeline.models.tresnet.tresnet import TResnetM # tresnet
 from pipeline.vit_csra import VIT_B16_224_CSRA, VIT_L16_224_CSRA, VIT_CSRA
 from pipeline.dataset import DataSet
 from utils.evaluation.eval import evaluation
@@ -169,6 +170,17 @@ def main():
             cls_num_heads=args.num_heads, lam=args.lam, cls_num_cls=args.num_cls
         )
 
+    # add tresnet model
+    if args.model == "tresnet_m":
+        model = TResnetM(num_classes=args.num_cls)
+        trenset_pt_path = "./data/tresnet_m.pth"
+        if trenset_pt_path:  # make sure to load pretrained ImageNet model
+            state = torch.load(trenset_pt_path) #  map_location='cpu'
+            filtered_dict = {k: v for k, v in state['model'].items() if
+                            (k in model.state_dict() and 'head.fc' not in k)}
+            model.load_state_dict(filtered_dict, strict=False)
+            print("Pretrained model loaded successfully!")
+    
     model.cuda()
     if torch.cuda.device_count() > 1:
         print("lets use {} GPUs.".format(torch.cuda.device_count()))

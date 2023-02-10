@@ -99,7 +99,7 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_coco --mo
 ```
 ### WIDER-Attribute training
 
-For MSL ViT
+For ViT
 ```
 CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_wider --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
 ```
@@ -109,6 +109,17 @@ For MSL ViT
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_wider --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
 ```
 
+### Tresnet
+
+git+https://github.com/mapillary/inplace_abn.git@v1.0.12
+
+```
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name tresnet_voc --model tresnet_m --batch_size 6 --total_epoch 60 --dataset voc07 --num_cls 20
+```
+
+```
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name tresnet_wider --model tresnet_m --img_size 224 --batch_size 6 --total_epoch 40 --dataset wider --num_cls 14
+```
 
 ## 2b. Evaluation code
 
