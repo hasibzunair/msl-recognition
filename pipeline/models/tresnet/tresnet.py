@@ -222,18 +222,6 @@ class TResNet(Module):
             block(self.inplanes, planes, use_se=use_se, anti_alias_layer=anti_alias_layer))
         return nn.Sequential(*layers)
 
-    # def forward(self, x):
-    #     x = self.body(x)
-    #     self.embeddings = self.global_pool(x)
-    #     logits = self.head(self.embeddings)
-    #     return logits
-
-
-
-
-    # newly added 
-
-    # todo: forward train
     def forward_train(self, x, target):
         x = self.body(x)
         self.embeddings = self.global_pool(x)
@@ -241,14 +229,12 @@ class TResNet(Module):
         loss = self.loss_func(logits, target, reduction="mean")
         return logits, loss
 
-    # todo: forward test
     def forward_test(self, x):
         x = self.body(x)
         self.embeddings = self.global_pool(x)
         logits = self.head(self.embeddings)
         return logits
 
-    # todo: condition for using each config
     def forward(self, x, target=None):
         if target is not None:
             return self.forward_train(x, target)

@@ -34,6 +34,9 @@ def Args():
     parser.add_argument(
         "--cutmix", default=None, type=str
     )  # path to cutmix-pretrained backbone
+    parser.add_argument(
+        "--tres", default=None, type=str
+    )  # path to tresnet-pretrained backbone
     # dataset
     parser.add_argument("--dataset", default="voc07", type=str)
     parser.add_argument("--num_cls", default=20, type=int)
@@ -172,14 +175,14 @@ def main():
 
     # add tresnet model
     if args.model == "tresnet_m":
+        print("Loading tresnet model")
         model = TResnetM(num_classes=args.num_cls)
-        trenset_pt_path = "./data/tresnet_m.pth"
-        if trenset_pt_path:  # make sure to load pretrained ImageNet model
-            state = torch.load(trenset_pt_path) #  map_location='cpu'
+        if args.tres:  # make sure to load pretrained ImageNet model
+            state = torch.load(args.tres) #  map_location='cpu'
             filtered_dict = {k: v for k, v in state['model'].items() if
                             (k in model.state_dict() and 'head.fc' not in k)}
             model.load_state_dict(filtered_dict, strict=False)
-            print("Pretrained model loaded successfully!")
+            print("Tresnet pretrained model loaded successfully!")
     
     model.cuda()
     if torch.cuda.device_count() > 1:
