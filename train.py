@@ -172,12 +172,10 @@ def main():
         model = VIT_L16_224_CSRA(
             cls_num_heads=args.num_heads, lam=args.lam, cls_num_cls=args.num_cls
         )
-    
-    # add tresnet model
     if args.model == "tresnet_m":
-        print("Loading tresnet model")
+        print("Loading Tresnet_M model")
         model = TResnetM(num_classes=args.num_cls)
-        # Load pretrained model
+        # Load pretrained model, ./data/tresnet_m_448.pth
         # https://github.com/Alibaba-MIIL/TResNet/blob/master/MODEL_ZOO.md
         if args.tres:
             state = torch.load(args.tres)
@@ -186,17 +184,28 @@ def main():
             model.load_state_dict(filtered_dict, strict=False)
             print(f"Loaded {args.tres} successfully!")
 
-        # if args.model == "tresnet_l":
-        # print("Loading tresnet model")
-        # model = TResnetL(num_classes=args.num_cls)
-        # # Load pretrained model
-        # # https://github.com/Alibaba-MIIL/TResNet/blob/master/MODEL_ZOO.md
-        # if args.tres:
-        #     state = torch.load(args.tres)
-        #     filtered_dict = {k: v for k, v in state['model'].items() if
-        #                     (k in model.state_dict() and 'head.fc' not in k)}
-        #     model.load_state_dict(filtered_dict, strict=False)
-        #     print(f"Loaded {args.tres} successfully!")
+    if args.model == "tresnet_l":
+        print("Loading Tresnet_L model")
+        model = TResnetL(num_classes=args.num_cls)
+        # Load pretrained model, ./data/tresnet_l_448.pth
+        if args.tres:
+            state = torch.load(args.tres)
+            filtered_dict = {k: v for k, v in state['model'].items() if
+                            (k in model.state_dict() and 'head.fc' not in k)}
+            model.load_state_dict(filtered_dict, strict=False)
+            print(f"Loaded {args.tres} successfully!")
+
+    if args.model == "Tresnet_xl":
+        print("Loading tresnet_XL model")
+        model = TResnetXL(num_classes=args.num_cls)
+        # Load pretrained model, ./data/tresnet_xl_448.pth
+        if args.tres:
+            state = torch.load(args.tres)
+            filtered_dict = {k: v for k, v in state['model'].items() if
+                            (k in model.state_dict() and 'head.fc' not in k)}
+            model.load_state_dict(filtered_dict, strict=False)
+            print(f"Loaded {args.tres} successfully!")
+
 
     model.cuda()
     if torch.cuda.device_count() > 1:
