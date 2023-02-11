@@ -172,18 +172,20 @@ def main():
         model = VIT_L16_224_CSRA(
             cls_num_heads=args.num_heads, lam=args.lam, cls_num_cls=args.num_cls
         )
-
+    
     # add tresnet model
     if args.model == "tresnet_m":
         print("Loading tresnet model")
         model = TResnetM(num_classes=args.num_cls)
-        if args.tres:  # make sure to load pretrained ImageNet model
-            state = torch.load(args.tres) #  map_location='cpu'
+        # Load pretrained model
+        # https://github.com/Alibaba-MIIL/TResNet/blob/master/MODEL_ZOO.md
+        if args.tres:
+            state = torch.load(args.tres)
             filtered_dict = {k: v for k, v in state['model'].items() if
                             (k in model.state_dict() and 'head.fc' not in k)}
             model.load_state_dict(filtered_dict, strict=False)
-            print("Tresnet pretrained model loaded successfully!")
-    
+            print(f"Loaded {args.tres} successfully!")
+
     model.cuda()
     if torch.cuda.device_count() > 1:
         print("lets use {} GPUs.".format(torch.cuda.device_count()))
