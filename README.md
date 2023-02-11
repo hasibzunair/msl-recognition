@@ -11,6 +11,8 @@ This code requires Python 3.8.12 and CUDA 11.2. Create and activate the followin
 conda update conda
 conda env create -f environment.yml
 conda activate maskrec
+# Install if you want to use TResNets
+pip install git+https://github.com/mapillary/inplace_abn.git@v1.0.12
 ```
 
 ## 2a. Training code
@@ -110,8 +112,6 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_wider --m
 ```
 
 ### Tresnet
-
-git+https://github.com/mapillary/inplace_abn.git@v1.0.12
 
 ```
 CUDA_VISIBLE_DEVICES=0 python train.py --exp_name tresnetm_voc --model tresnet_m --batch_size 6 --total_epoch 60 --dataset voc07 --num_cls 20 --tres ./data/tresnet_m_448.pth
