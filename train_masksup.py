@@ -13,6 +13,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from pipeline.resnet_csra import ResNet_CSRA
+from pipeline.models.tresnet.tresnet import TResnetM, TResnetL, TResnetXL
 from pipeline.vit_csra import VIT_B16_224_CSRA, VIT_L16_224_CSRA, VIT_CSRA
 from pipeline.dataset import DataSetMaskSup
 from utils.evaluation.eval import evaluation
@@ -33,6 +34,9 @@ def Args():
     parser.add_argument(
         "--cutmix", default=None, type=str
     )  # path to cutmix-pretrained backbone
+    parser.add_argument(
+        "--tres", default=None, type=str
+    )  # path to tresnet-pretrained backbone
     # dataset
     parser.add_argument("--dataset", default="voc07", type=str)
     parser.add_argument("--num_cls", default=20, type=int)
@@ -103,9 +107,9 @@ def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
         
         # Compute total loss
         # loss coefficients
-        alpha = 1#0.3
-        beta = 1#0.2
-        gamma = 1#0.5
+        alpha = 0.3
+        beta = 0.2
+        gamma = 0.5
         
         # Total loss
         loss = alpha * loss1 + beta * loss2 + gamma * loss3
@@ -209,6 +213,17 @@ def main():
         model = VIT_L16_224_CSRA(
             cls_num_heads=args.num_heads, lam=args.lam, cls_num_cls=args.num_cls
         )
+    if args.model == "tresnet_m":
+        print("Loading Tresnet_M model")
+        model = TResnetM(num_classes=args.num_cls)
+        # Load pretrained model, ./data/tresnet_m_448.pth
+        # https://github.com/Alibaba-MIIL/TResNet/blob/master/MODEL_ZOO.md
+        if args.tres:
+            state = torch.load(args.tres)
+            filtered_dict = {k: v for k, v in state['model'].items() if
+                            (k in model.state_dict() and 'head.fc' not in k)}
+            model.load_state_dict(filtered_dict, strict=False)
+            print(f"Loaded {args.tres} successfully!")
 
     model.cuda()
     if torch.cuda.device_count() > 1:

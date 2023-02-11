@@ -183,28 +183,26 @@ def main():
                             (k in model.state_dict() and 'head.fc' not in k)}
             model.load_state_dict(filtered_dict, strict=False)
             print(f"Loaded {args.tres} successfully!")
-
-    if args.model == "tresnet_l":
-        print("Loading Tresnet_L model")
-        model = TResnetL(num_classes=args.num_cls)
-        # Load pretrained model, ./data/tresnet_l_448.pth
-        if args.tres:
-            state = torch.load(args.tres)
-            filtered_dict = {k: v for k, v in state['model'].items() if
-                            (k in model.state_dict() and 'head.fc' not in k)}
-            model.load_state_dict(filtered_dict, strict=False)
-            print(f"Loaded {args.tres} successfully!")
-
-    if args.model == "Tresnet_xl":
-        print("Loading tresnet_XL model")
-        model = TResnetXL(num_classes=args.num_cls)
-        # Load pretrained model, ./data/tresnet_xl_448.pth
-        if args.tres:
-            state = torch.load(args.tres)
-            filtered_dict = {k: v for k, v in state['model'].items() if
-                            (k in model.state_dict() and 'head.fc' not in k)}
-            model.load_state_dict(filtered_dict, strict=False)
-            print(f"Loaded {args.tres} successfully!")
+    # if args.model == "tresnet_l":
+    #     print("Loading Tresnet_L model")
+    #     model = TResnetL(num_classes=args.num_cls)
+    #     # Load pretrained model, ./data/tresnet_l_448.pth
+    #     if args.tres:
+    #         state = torch.load(args.tres)
+    #         filtered_dict = {k: v for k, v in state['model'].items() if
+    #                         (k in model.state_dict() and 'head.fc' not in k)}
+    #         model.load_state_dict(filtered_dict, strict=False)
+    #         print(f"Loaded {args.tres} successfully!")
+    # if args.model == "tresnet_xl":
+    #     print("Loading Tresnet_XL model")
+    #     model = TResnetXL(num_classes=args.num_cls)
+    #     # Load pretrained model, ./data/tresnet_xl_448.pth
+    #     if args.tres:
+    #         state = torch.load(args.tres)
+    #         filtered_dict = {k: v for k, v in state['model'].items() if
+    #                         (k in model.state_dict() and 'head.fc' not in k)}
+    #         model.load_state_dict(filtered_dict, strict=False)
+    #         print(f"Loaded {args.tres} successfully!")
 
 
     model.cuda()

@@ -76,6 +76,18 @@ For MSL ViT
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_voc --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
 ```
 
+For Baseline TResNet
+
+```
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name tresnetm_voc --model tresnet_m --batch_size 6 --total_epoch 60 --dataset voc07 --num_cls 20 --tres ./data/tresnet_m_448.pth
+```
+
+For MSL TResNet
+
+```
+CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_tresnetm_voc --model tresnet_m --batch_size 6 --total_epoch 60 --dataset voc07 --num_cls 20 --tres ./data/tresnet_m_448.pth
+```
+
 ### MS-COCO training
 
 For Baseline ResNet with CutMix:
@@ -109,12 +121,6 @@ CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_wider --model vit_L16_224
 For MSL ViT
 ```
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_wider --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
-```
-
-### Tresnet
-
-```
-CUDA_VISIBLE_DEVICES=0 python train.py --exp_name tresnetm_voc --model tresnet_m --batch_size 6 --total_epoch 60 --dataset voc07 --num_cls 20 --tres ./data/tresnet_m_448.pth
 ```
 
 ## 2b. Evaluation code
