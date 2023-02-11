@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from pipeline.resnet_csra import ResNet_CSRA
-from pipeline.models.tresnet.tresnet import TResnetM # tresnet
+from pipeline.models.tresnet.tresnet import TResnetM, TResnetL, TResnetXL
 from pipeline.vit_csra import VIT_B16_224_CSRA, VIT_L16_224_CSRA, VIT_CSRA
 from pipeline.dataset import DataSet
 from utils.evaluation.eval import evaluation
@@ -185,6 +185,18 @@ def main():
                             (k in model.state_dict() and 'head.fc' not in k)}
             model.load_state_dict(filtered_dict, strict=False)
             print(f"Loaded {args.tres} successfully!")
+
+        # if args.model == "tresnet_l":
+        # print("Loading tresnet model")
+        # model = TResnetL(num_classes=args.num_cls)
+        # # Load pretrained model
+        # # https://github.com/Alibaba-MIIL/TResNet/blob/master/MODEL_ZOO.md
+        # if args.tres:
+        #     state = torch.load(args.tres)
+        #     filtered_dict = {k: v for k, v in state['model'].items() if
+        #                     (k in model.state_dict() and 'head.fc' not in k)}
+        #     model.load_state_dict(filtered_dict, strict=False)
+        #     print(f"Loaded {args.tres} successfully!")
 
     model.cuda()
     if torch.cuda.device_count() > 1:
