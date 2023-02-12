@@ -204,7 +204,6 @@ def main():
             model.load_state_dict(filtered_dict, strict=False)
             print(f"Loaded {args.tres} successfully!")
 
-
     model.cuda()
     if torch.cuda.device_count() > 1:
         print("lets use {} GPUs.".format(torch.cuda.device_count()))
