@@ -79,7 +79,7 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_voc --mod
 For Baseline TResNet
 
 ```
-CUDA_VISIBLE_DEVICES=0 python train.py --exp_name tresnetm_voc --model tresnet_m --batch_size 6 --total_epoch 60 --dataset voc07 --num_cls 20 --tres ./data/tresnet_m_448.pth
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name tresnetxl_voc --model tresnet_xl --batch_size 6 --total_epoch 60 --dataset voc07 --num_cls 20 --tres ./data/tresnet_xl_448.pth
 ```
 
 For MSL TResNet
