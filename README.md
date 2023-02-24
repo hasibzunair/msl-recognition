@@ -114,14 +114,24 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_coco --mo
 ```
 ### WIDER-Attribute training
 
-For ViT
+For ViT-L
 ```
 CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitl_wider --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
 ```
 
-For MSL ViT
+For MSL ViT-L
 ```
 CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_wider --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
+```
+
+For ViT-B
+```
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name vitb_wider --model vit_B16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
+```
+
+For MSL ViT-B
+```
+CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitb_wider --model vit_B16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
 ```
 
 ## 2b. Evaluation code
