@@ -231,6 +231,46 @@ def train_context_branch_with_task_sim(model, epoch, save_masks=True):
             data["mask"].to(DEVICE),
         )
 
+
+        #import ipdb; ipdb.set_trace()
+
+        # Save masked image
+        if save_masks:
+            masked_img = data2[0]
+
+            #import ipdb; ipdb.set_trace()
+
+            def unnormalize(tensor, mean, std):
+                for t, m, s in zip(tensor, mean, std):
+                    t.mul_(s).add_(m)
+                return tensor
+
+            def to_img_(ten):
+                curr_img = ten.detach().to(torch.device('cpu'))
+                curr_img = unnormalize(curr_img,
+                                    torch.tensor([0, 0, 0]), # mean and std
+                                    torch.tensor([1, 1, 1])) 
+                curr_img = curr_img.permute((1, 2, 0))
+                curr_img = curr_img.detach().cpu().numpy()
+                #print(np.unique(curr_img))
+                curr_img = (curr_img * 255).astype(np.uint8)
+                return curr_img
+            
+
+            masked_img = to_img_(masked_img)
+
+            #masked_img = (masked_img.permute(1, 2, 0).detach().cpu().numpy() + 1) / 2
+            #masked_img = (masked_img * 255).astype(np.uint8)
+            #masked_img = cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR)
+            
+            
+            cv2.imwrite(
+                "{}/samples/masked_imgs_cb_ts/ep{}_b{}.png".format(
+                    LOG_PATH, epoch, batch_idx
+                ),
+                masked_img,
+            )
+
         # # Save masked image
         # if save_masks:
         #     masked_img = data2[0]

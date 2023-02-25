@@ -151,12 +151,15 @@ class DataSetMaskSup(Dataset):
         # scribbles
         self._scribbles_folder = "./datasets/SCRIBBLES"
         
-        # for easy masks
+        # Type of masks to use, this is hardcoded since we find that high masks
+        # work better in MSL. See paper for details.
+
+        # for low masks
         # self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[
         #     :1000
         # ]
 
-        # for hard masks
+        # for high masks
         self._scribbles = sorted(glob.glob(self._scribbles_folder + "/*.png"))[::-1][
             :1000
         ]
