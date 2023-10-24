@@ -122,6 +122,8 @@ CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --nu
 CUDA_VISIBLE_DEVICES=0 python val.py --model vit_B16_224 --img_size 224 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14  --load_from checkpoint/msl_v_wider.pth
 ```
 
+All experiments are conducted on a single NVIDIA 3080Ti GPU. For additional implementation details and results, please refer to the supplementary material [here](https://github.com/hasibzunair/masksup-segmentation/blob/master/media/supplementary_materials.pdf).
+
 ## 3. Pre-trained models
 
 We provide pretrained models on [GitHub Releases](https://github.com/hasibzunair/masksup-segmentation/releases/tag/v0.1) for reproducibility.
