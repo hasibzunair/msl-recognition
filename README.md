@@ -164,4 +164,4 @@ utils/demo_images/000002.jpg prediction: train,
 
 ### Acknowledgements
 
-This code is based on ***Residual Attention: A Simple But Effective Method for Multi-Label Recoginition*** ([Paper](https://arxiv.org/abs/2108.02456), [Code](https://github.com/Kevinz-code/CSRA)). We thank authors for making their code public.
+This repository was build on top of [CSRA](https://github.com/Kevinz-code/CSRA) and our previous work [MaskSup](https://github.com/hasibzunair/masksup-segmentation). Please, consider acknowledging these projects.
