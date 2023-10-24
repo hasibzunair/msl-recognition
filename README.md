@@ -1,15 +1,18 @@
 # MSL
 
-<!---
-Hugging Face Spaces Badge. Use if needed.
-[![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/hasibzunair/masksup-segmentation-demo)
--->
+**Concordia University**
 
-This is official code for our **BMVC 2022 paper**:<br>
-[Learning to Recognize Small and Occluded Objects using Masked Supervision](Link)
+Hasib Zunair and A. Ben Hamza
+
+[[`Paper`](link)] [[`Project`](link)] [[`Demo`](#4-demo)] [[`BibTeX`](#5-citation)]
+
+This is official code for our **WACV 2024 paper**:<br>
+[Learning to Recognize Occluded and Small Objects with Partial Inputs](Link)
 <br>
 
-![attention](https://github.com/hasibzunair/masksup-segmentation/blob/master/media/pipeline.png)
+![MSL Design](https://github.com/hasibzunair/masksup-segmentation/blob/master/media/pipeline.png?raw=true)
+
+Summarize in 3-5 sentences your project here.
 
 ## 1. Specification of dependencies
 
@@ -18,7 +21,7 @@ This code requires Python 3.8.12 and CUDA 11.2. Create and activate the followin
 ```bash
 conda update conda
 conda env create -f environment.yml
-conda activate maskrec
+conda activate msl
 ```
 
 ## 2a. Training code
@@ -28,7 +31,7 @@ conda activate maskrec
 The VOC2007, COCO2014 and Wider-Attribute datasets are expected to have the following structure:
 
 ```bash
-datasets/
+|- datasets/
 |-- VOCdevkit/
 |---- VOC2007/
 |------ JPEGImages/
@@ -66,36 +69,36 @@ which will automatically result in annotation json files in *./data/voc07*, *./d
 
 ```bash
 # MSL ResNet with CutMix
-CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_rescm_voc --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name msl_rescm_voc --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
 ```bash
 # MSL ViT
-CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_voc --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name msl_vitl_voc --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 60 --num_heads 1 --lam 0.3 --dataset voc07 --num_cls 20
 ```
 
 ### MS-COCO training
 
 ```bash
 # MSL ResNet with CutMix
-CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup01_0.3,0.2,0.5_rescm_coco --batch_size 6 --total_epoch 60 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name msl01_0.3,0.2,0.5_rescm_coco --batch_size 6 --total_epoch 60 --num_heads 6 --lam 0.4 --dataset coco --num_cls 80 --cutmix data/resnet101_cutmix_pretrained.pth
 ```
 
 ```bash
 # MSL ViT
-CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_coco --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 8 --lam 1 --dataset coco --num_cls 80
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name msl_vitl_coco --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 8 --lam 1 --dataset coco --num_cls 80
 ```
 
 ### WIDER-Attribute training
 
 ```bash
 # MSL ViT-L
-CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitl_wider --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name msl_vitl_wider --model vit_L16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
 ```
 
 ```bash
 # MSL ViT-B
-CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitb_wider --model vit_B16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
+CUDA_VISIBLE_DEVICES=0 python train.py --exp_name msl_vitb_wider --model vit_B16_224 --img_size 224 --batch_size 6 --total_epoch 40 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14
 ```
 
 ## 2b. Evaluation code
@@ -104,14 +107,19 @@ CUDA_VISIBLE_DEVICES=0 python train_masksup.py --exp_name masksup_vitb_wider --m
 
 ```bash
 # MSL ResNet with CutMix
-CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20  --load_from checkpoint/experiments/voc_experiments/masksup01_0.3,0.2,0.5_rescm_voc/epoch_54.pth
+CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20  --load_from checkpoint/msl_c_voc.pth
 ```
 
 ### COCO2014
 
 ```bash
 # MSL ResNet with CutMix
-CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --num_cls 80  --load_from checkpoint/experiments/coco_experiments/masksup01_0.3,0.2,0.5_rescm_coco/epoch_58.pth
+CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --num_cls 80  --load_from checkpoint/msl_c_coco.pth
+```
+
+### Wider-Attribute
+```bash
+CUDA_VISIBLE_DEVICES=0 python val.py --model vit_B16_224 --img_size 224 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14  --load_from checkpoint/msl_v_wider.pth
 ```
 
 ## 3. Pre-trained models
@@ -129,7 +137,7 @@ We provide pretrained models on [GitHub Releases](https://github.com/hasibzunair
 We provide prediction demos of our models. The demo images (picked from VCO2007) have already been put into *./utils/demo_images/*, you can simply run demo.py by using our MSL models pretrained on VOC2007:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python demo.py --model resnet101 --num_heads 1 --lam 0.1 --dataset voc07 --load_from checkpoint/experiments/voc_experiments/masksup01_0.3,0.2,0.5_rescm_voc/epoch_54.pth --img_dir utils/demo_images
+CUDA_VISIBLE_DEVICES=0 python demo.py --model resnet101 --dataset voc07 --load_from checkpoint/msl_c_voc.pth --img_dir utils/demo_images
 ```
 
 which will output like this:
@@ -144,17 +152,13 @@ utils/demo_images/000002.jpg prediction: train,
 ## 5. Citation
 
 ```bibtex
- @inproceedings{zunair2022masked,
-    title={Masked Supervised Learning for Semantic Segmentation},
+ @inproceedings{zunair2024msl,
+    title={Learning to Recognize Occluded and Small Objects with Partial Inputs},
     author={Zunair, Hasib and Hamza, A Ben},
-    booktitle={Proc. British Machine Vision Conference},
-    year={2022}
+    booktitle={Proc. IEEE Winter Conference on Applications of Computer Vision},
+    year={2024}
   }
 ```
-
-## Project Notes
-
-**[March 7, 2023]** Submitted to ICCV 2023.
 
 ### Acknowledgements
 

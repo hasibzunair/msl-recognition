@@ -15,7 +15,7 @@ from tqdm import tqdm
 from pipeline.resnet_csra import ResNet_CSRA
 from pipeline.models.tresnet.tresnet import TResnetM, TResnetL, TResnetXL
 from pipeline.vit_csra import VIT_B16_224_CSRA, VIT_L16_224_CSRA, VIT_CSRA
-from pipeline.dataset import DataSet
+from pipeline.dataset import DataSetMaskSup
 from utils.evaluation.eval import evaluation
 from utils.evaluation.warmUpLR import WarmUpLR
 from helpers import Logger
@@ -55,7 +55,7 @@ def Args():
     return args
 
 
-def train(i, args, model, train_loader, optimizer, warmup_scheduler):
+def train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler):
 
     print("Starting training...")
     model.train()
@@ -64,16 +64,57 @@ def train(i, args, model, train_loader, optimizer, warmup_scheduler):
     for index, data in enumerate(train_loader):
         batch_begin = time.time()
 
-        # Get image and label
+        # Get image, masked image and label
         img = data["img"].cuda()
+        masked_img = data["masked_img"].cuda()
         target = data["target"].cuda()
 
-        # Compute loss
-        optimizer.zero_grad()
-        logit, loss = model(img, target)
-        loss = loss.mean()
+        ### For debugging
+        # import torch 
+        # import numpy as np 
+        # import matplotlib.pyplot as plt
+        # def unnormalize(tensor, mean, std):
+        #     for t, m, s in zip(tensor, mean, std):
+        #         t.mul_(s).add_(m)
+        #     return tensor
+        # def to_img_(ten):
+        #     curr_img = ten.detach().to(torch.device('cpu'))
+        #     curr_img = unnormalize(curr_img,
+        #                         torch.tensor([0, 0, 0]), # mean and std
+        #                         torch.tensor([1, 1, 1])) 
+        #     curr_img = curr_img.permute((1, 2, 0))
+        #     return curr_img
 
-        # Update
+        # img = to_img_(img[0])
+        # plt.imshow(img); plt.show()
+
+        #### Compute loss ####
+        optimizer.zero_grad()
+
+        # Original branch
+        logit1, loss1 = model(img, target)
+        loss1 = loss1.mean()
+
+        # Masked branch
+        logit2, loss2 = model(masked_img, target)
+        loss2 = loss2.mean()
+
+        # Maximize similarity of two branches
+        pred1 = torch.sigmoid(logit1.float())
+        pred2 = torch.sigmoid(logit2.float())
+        # MSE
+        loss3 = criterion_mse(pred1, pred2)
+        
+        # Compute total loss
+        # loss coefficients
+        alpha = 0.3
+        beta = 0.2
+        gamma = 0.5
+        
+        # Total loss
+        loss = alpha * loss1 + beta * loss2 + gamma * loss3
+
+        #### Update ####
         loss.backward()
         optimizer.step()
 
@@ -183,26 +224,6 @@ def main():
                             (k in model.state_dict() and 'head.fc' not in k)}
             model.load_state_dict(filtered_dict, strict=False)
             print(f"Loaded {args.tres} successfully!")
-    # if args.model == "tresnet_l":
-    #     print("Loading Tresnet_L model")
-    #     model = TResnetL(num_classes=args.num_cls)
-    #     # Load pretrained model, ./data/tresnet_l_448.pth
-    #     if args.tres:
-    #         state = torch.load(args.tres)
-    #         filtered_dict = {k: v for k, v in state['model'].items() if
-    #                         (k in model.state_dict() and 'head.fc' not in k)}
-    #         model.load_state_dict(filtered_dict, strict=False)
-    #         print(f"Loaded {args.tres} successfully!")
-    if args.model == "tresnet_xl":
-        print("Loading Tresnet_XL model")
-        model = TResnetXL(num_classes=args.num_cls)
-        # Load pretrained model, ./data/tresnet_xl_448.pth
-        if args.tres:
-            state = torch.load(args.tres)
-            filtered_dict = {k: v for k, v in state['model'].items() if
-                            (k in model.state_dict() and 'head.fc' not in k)}
-            model.load_state_dict(filtered_dict, strict=False)
-            print(f"Loaded {args.tres} successfully!")
 
     model.cuda()
     if torch.cuda.device_count() > 1:
@@ -226,8 +247,8 @@ def main():
         step_size = 5
         args.train_aug = ["randomflip"]
 
-    train_dataset = DataSet(train_file, args.train_aug, args.img_size, args.dataset)
-    test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset)
+    train_dataset = DataSetMaskSup(train_file, args.train_aug, args.img_size, args.dataset)
+    test_dataset = DataSetMaskSup(test_file, args.test_aug, args.img_size, args.dataset)
     train_loader = DataLoader(
         train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=8
     )
@@ -235,7 +256,12 @@ def main():
         test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8
     )
 
-    ########## Setup optimizer and warmup ##########
+    ########## Setup loss, optimizer and warmup ##########
+    
+    # loss for maximimizing similarity between predictions from two branches
+    global criterion_mse 
+    criterion_mse = nn.MSELoss()
+
     backbone, classifier = [], []
     for name, param in model.named_parameters():
         if "classifier" in name:
@@ -260,7 +286,7 @@ def main():
 
     ########## Training and evaluation loop ##########
     for i in range(1, args.total_epoch + 1):
-        train(i, args, model, train_loader, optimizer, warmup_scheduler)
+        train_masksup(i, args, model, train_loader, optimizer, warmup_scheduler)
         torch.save(
             model.state_dict(), "checkpoint/{}/epoch_{}.pth".format(args.exp_name, i)
         )

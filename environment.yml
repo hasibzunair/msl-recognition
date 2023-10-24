@@ -1,4 +1,4 @@
-name: maskrec
+name: msl
 channels:
   - pytorch-lts
   - nvidia
