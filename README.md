@@ -162,6 +162,17 @@ utils/demo_images/000002.jpg prediction: train,
   }
 ```
 
+## Project Notes
+
+<details><summary>My notes for reference</summary>
+<br>
+
+**[Oct 24, 2023]** Accepted to WACV 2024! Wohooo. :D
+
+**[Sept 24, 2023]** Semantic segmentation scripts added in this repo, built on https://github.com/hasibzunair/masksup-segmentation. Results were not added in paper due to time. Keeping it here for future reference!
+
+</details>
+
 ### Acknowledgements
 
 This repository was build on top of [CSRA](https://github.com/Kevinz-code/CSRA) and our previous work [MaskSup](https://github.com/hasibzunair/masksup-segmentation). Please, consider acknowledging these projects.
