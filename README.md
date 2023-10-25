@@ -12,7 +12,7 @@ This is official code for our **WACV 2024 paper**:<br>
 
 ![MSL Design](./media/figure.png)
 
-Summarize in 3-5 sentences your project here.
+TBA: Summarize in 3-5 sentences your project here.
 
 ## 1. Specification of dependencies
 
