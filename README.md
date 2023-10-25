@@ -10,7 +10,7 @@ This is official code for our **WACV 2024 paper**:<br>
 [Learning to Recognize Occluded and Small Objects with Partial Inputs](Link)
 <br>
 
-![MSL Design](https://github.com/hasibzunair/masksup-segmentation/blob/master/media/pipeline.png?raw=true)
+![MSL Design](./media/figure.png)
 
 Summarize in 3-5 sentences your project here.
 
@@ -103,26 +103,27 @@ CUDA_VISIBLE_DEVICES=0 python train.py --exp_name msl_vitb_wider --model vit_B16
 
 ## 2b. Evaluation code
 
-### VOC2007
+### VOC2007 eval
 
 ```bash
 # MSL ResNet with CutMix
 CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 1 --lam 0.1 --dataset voc07 --num_cls 20  --load_from checkpoint/msl_c_voc.pth
 ```
 
-### COCO2014
+### COCO2014 eval
 
 ```bash
 # MSL ResNet with CutMix
 CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --num_cls 80  --load_from checkpoint/msl_c_coco.pth
 ```
 
-### Wider-Attribute
+### Wider-Attribute eval
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python val.py --model vit_B16_224 --img_size 224 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14  --load_from checkpoint/msl_v_wider.pth
 ```
 
-All experiments are conducted on a single NVIDIA 3080Ti GPU. For additional implementation details and results, please refer to the supplementary material [here](https://github.com/hasibzunair/masksup-segmentation/blob/master/media/supplementary_materials.pdf).
+All experiments are conducted on a single NVIDIA 3080Ti GPU. For additional implementation details and results, please refer to the supplementary material [here](./media/Supplementary_Materials.pdf).
 
 ## 3. Pre-trained models
 
