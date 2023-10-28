@@ -4,7 +4,7 @@
 
 Hasib Zunair and A. Ben Hamza
 
-[[`Paper`](link)] [[`Project`](link)] [[`Demo`](#4-demo)] [[`BibTeX`](#5-citation)]
+[[`Paper`](link)] [[`Project`](https://hasibzunair.github.io/msl-recognition/)] [[`Demo`](#4-demo)] [[`BibTeX`](#5-citation)]
 
 This is official code for our **WACV 2024 paper**:<br>
 [Learning to Recognize Occluded and Small Objects with Partial Inputs](Link)
@@ -12,7 +12,7 @@ This is official code for our **WACV 2024 paper**:<br>
 
 ![MSL Design](./media/figure.png)
 
-TBA: Summarize in 3-5 sentences your project here.
+We propose a learning algorithm to explicitly focus on context from neighbouring regions around objects and learn a distribution of association across classes. Ideally to handle situations in-the-wild where only part of some object class is visible, but where us humans might readily use context to infer the classes presence.
 
 ## 1. Specification of dependencies
 
@@ -55,7 +55,7 @@ The VOC2007, COCO2014 and Wider-Attribute datasets are expected to have the foll
 ...
 ```
 
-Then directly run the following command to generate json file (for implementation) of these datasets.
+Then directly run the following command to generate json file of these datasets.
 
 ```bash
 python utils/prepare/prepare_voc.py  --data_path  datasets/VOCdevkit
@@ -123,7 +123,7 @@ CUDA_VISIBLE_DEVICES=0 python val.py --num_heads 6 --lam 0.4 --dataset coco --nu
 CUDA_VISIBLE_DEVICES=0 python val.py --model vit_B16_224 --img_size 224 --num_heads 1 --lam 0.3 --dataset wider --num_cls 14  --load_from checkpoint/msl_v_wider.pth
 ```
 
-All experiments are conducted on a single NVIDIA 3080Ti GPU. For additional implementation details and results, please refer to the supplementary material [here](./media/Supplementary_Materials.pdf).
+All experiments are conducted on a single NVIDIA 3080Ti GPU. For additional implementation details and results, please refer to the supplementary materials section in the paper.
 
 ## 3. Pre-trained models
 
@@ -131,9 +131,9 @@ We provide pretrained models on [GitHub Releases](https://github.com/hasibzunair
 
 |Dataset      | Backbone  |   mAP (%)  |   Download   |
 |  ---------- | -------   |  ------ |  --------   |
-| VOC2007 | MSL-C  | 86.4 | [download](https://github.com/hasibzunair/masksup-segmentation/releases/download/v0.1/masksupglas76.06iou.pth) |
-| COCO2014 | MSL-C | 96.1 | [download](https://github.com/hasibzunair/masksup-segmentation/releases/download/v0.1/masksuppolyp84.02iou.pth) |
-| Wider-Attribute | MSL-V | 90.6 | [download](https://github.com/hasibzunair/masksup-segmentation/releases/download/v0.1/masksupnyu39.31iou.pth) |
+| VOC2007 | MSL-C  | 86.4 | [download](https://github.com/hasibzunair/msl-recognition/releases/download/v1.0-models/msl_c_voc.pth) |
+| COCO2014 | MSL-C | 96.1 | [download](https://github.com/hasibzunair/msl-recognition/releases/download/v1.0-models/msl_c_coco.pth) |
+| Wider-Attribute | MSL-V | 90.6 | [download](https://github.com/hasibzunair/msl-recognition/releases/download/v1.0-models/msl_v_wider.pth) |
 
 ## 4. Demo
 
@@ -176,4 +176,4 @@ utils/demo_images/000002.jpg prediction: train,
 
 ### Acknowledgements
 
-This repository was build on top of [CSRA](https://github.com/Kevinz-code/CSRA) and our previous work [MaskSup](https://github.com/hasibzunair/masksup-segmentation). Please, consider acknowledging these projects.
+This repository was build on top of [CSRA](https://github.com/Kevinz-code/CSRA) and our previous work [MaskSup](https://github.com/hasibzunair/masksup-segmentation) while explores masked supervision in semantic segmentation. Please, consider acknowledging these projects.
