@@ -176,4 +176,4 @@ utils/demo_images/000002.jpg prediction: train,
 
 ### Acknowledgements
 
-This repository was build on top of [CSRA](https://github.com/Kevinz-code/CSRA) and our previous work [MaskSup](https://github.com/hasibzunair/masksup-segmentation) while explores masked supervision in semantic segmentation. Please, consider acknowledging these projects.
+This repository was build on top of [CSRA](https://github.com/Kevinz-code/CSRA) and our previous work [MaskSup](https://github.com/hasibzunair/masksup-segmentation) which explores masked supervision in semantic segmentation. Please, consider acknowledging these projects.
