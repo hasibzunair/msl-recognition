@@ -2,6 +2,7 @@ import os
 import torch
 import gradio as gr
 import argparse
+import codecs
 import time
 import torch
 import torch.nn as nn
@@ -25,8 +26,11 @@ if torch.cuda.is_available():
     torch.backends.cudnn.deterministic = True
 
 # Device
-DEVICE = "cpu"
-print(DEVICE)
+# Use GPU if available
+if torch.cuda.is_available():
+    DEVICE = torch.device("cuda")
+else:
+    DEVICE = torch.device("cpu")
 
 # Make directories
 os.system("mkdir ./models")
@@ -42,7 +46,8 @@ model = ResNet_CSRA(num_heads=1, lam=0.1, num_classes=20)
 normalize = transforms.Normalize(mean=[0, 0, 0], std=[1, 1, 1])
 model.to(DEVICE)
 print("Loading weights from {}".format("./models/msl_c_voc.pth"))
-model.load_state_dict(torch.load("./models/msl_c_voc.pth"))
+model.load_state_dict(torch.load("./models/msl_c_voc.pth", map_location=torch.device("cpu")))
+model.eval()
 
 # Inference!
 def inference(img_path):
@@ -61,7 +66,6 @@ def inference(img_path):
 
     # Predict
     result = []
-    model.eval()
     with torch.no_grad():
         image = image.to(DEVICE)
         logit = model(image).squeeze(0)
@@ -78,7 +82,7 @@ inputs = gr.inputs.Image(type="filepath", label="Input Image")
 
 # Define style
 title = "Learning to Recognize Occluded and Small Objects with Partial Inputs"
-description = "TBA."
+description = codecs.open("description.html", "r", "utf-8").read()
 article = "<p style='text-align: center'><a href='https://arxiv.org/abs/1512.03385' target='_blank'>Learning to Recognize Occluded and Small Objects with Partial Inputs</a> | <a href='https://github.com/hasibzunair/msl-recognition' target='_blank'>Github Repo</a></p>"
 
 voc_classes = ("aeroplane", "bicycle", "bird", "boat", "bottle",
@@ -90,7 +94,7 @@ voc_classes = ("aeroplane", "bicycle", "bird", "boat", "bottle",
 gr.Interface(inference, 
             inputs, 
             outputs="text", 
-            examples=["demo_images/000001.jpg", "demo_images/000006.jpg", "demo_images/000009.jpg"], 
+            examples=["./000001.jpg", "./000006.jpg", "./000009.jpg"], 
             title=title, 
             description=description, 
             article=article,

@@ -3,8 +3,8 @@
 Hacked together by / Copyright 2020 Ross Wightman
 """
 from itertools import repeat
-from torch._six import container_abcs
-
+import collections.abc as container_abcs
+#from torch._six import container_abcs
 
 # From PyTorch internals
 def _ntuple(n):
