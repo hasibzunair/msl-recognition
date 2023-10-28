@@ -4,7 +4,7 @@
 
 Hasib Zunair and A. Ben Hamza
 
-[[`Paper`](link)] [[`Project`](https://hasibzunair.github.io/msl-recognition/)] [[`Demo`](#4-demo)] [[`BibTeX`](#5-citation)]
+[[`Paper`](link)] [[`Project`](https://hasibzunair.github.io/msl-recognition/)] [[`Demo`](https://huggingface.co/spaces/hasibzunair/msl-recognition-demo)] [[`BibTeX`](#5-citation)]
 
 This is official code for our **WACV 2024 paper**:<br>
 [Learning to Recognize Occluded and Small Objects with Partial Inputs](Link)
@@ -151,6 +151,8 @@ utils/demo_images/000004.jpg prediction: car,
 utils/demo_images/000002.jpg prediction: train,
 ...
 ```
+
+A web demo is available [here](https://huggingface.co/spaces/hasibzunair/msl-recognition-demo).
 
 ## 5. Citation
 
