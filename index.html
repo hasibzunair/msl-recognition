@@ -118,7 +118,7 @@
 
 <html>
 <head>
-	<title>MSL Image Recognition</title>
+	<title>MSL for Image Recognition</title>
 	<meta property="og:image" content="./resources/model.png"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
 	<meta property="og:title" content="Learning to Recognize Occluded and Small Objects with Partial Inputs" />
 	<meta property="og:description" content="Paper description." />
@@ -247,7 +247,7 @@
 					</td>
 				</tr>
 			</table>
-			<p><strong>Note</strong>: Website under dev, some links are empty!</p>
+			<p><strong>Note</strong>: Website under dev, some links are empty! Check again tomorrow.</p>
 		</table>
 	</center>
 
@@ -268,7 +268,7 @@
 			<tr>
 				<td width="600px">
 					<center>
-						<span style="font-size:14px"><i>Visual comparison of MSL (Ours) and CSRA on VOC2007 and MS-COCO. First two rows show samples from 
+						<span style="font-size:16px"><i><strong>Visual comparison of MSL (Ours) and CSRA on VOC2007 and MS-COCO datasets</strong>. First two rows show samples from 
 							VOC2007 where MSL can better recognize small objects and the second row shows cases of heavy occlusions. The last two rows 
 							shows samples from MS-COCO. For both datasets, MSL is effective at recognizing <strong>small</strong> and <strong>occluded</strong> 
 							objects compared to the baseline.</i>
@@ -295,24 +295,25 @@
 					small size of objects and occlusions. Even though this is not a solved problem, quite far from it, 
 					we believe our work is a significant step forward in solving 
 					the recognition of small and occluded objects. There has been some concurrent work on this subject as well. 
-					Specifically, see  <a href="https://arxiv.org/abs/2007.01755">MCAR</a>.
+					Specifically, see <a href="https://arxiv.org/abs/2007.01755">MCAR</a>.
 				</i>
 
 				<br><br>
 
 				<i> 
 					Our appraoch aims to explicitly focus on context from neighbouring regions around objects. Further, 
-					this enables to learn a distribution of association across classes. Ideally to handle situations in-the-wild where 
+					this also enables to learn a distribution of association across classes. Ideally to handle situations in-the-wild where 
 					only part of some object class is visible, but where us humans might readily use context to infer the classes presence.
 				</i>
 
 				<br><br>
 
 				<i>
-					We have also explored this technique in our previous 
-					work <a href="https://arxiv.org/abs/2210.00923">Masked Supervised Learning for Semantic Segmentation (In BMVC 2022, Oral)</a> where we find that MSL trained 
-					models are significantly compute efficient, better segments ambiguous and small regions, and is shape aware as it predicts segmentation 
-					masks of heavily masked regions.
+					We also explored this technique in our previous 
+					work <a href="https://arxiv.org/abs/2210.00923"><strong>Masked Supervised Learning for Semantic Segmentation</strong></a> (BMVC 2022, Oral)
+					where we find that MSL trained 
+					models are significantly compute efficient, better segments ambiguous and small regions, and is shape aware as it enables to quite well 
+					segment heavily masked regions.
 				</i>
 
 				<br><br>
@@ -343,6 +344,7 @@
 			</td>
 		</tr>
 	</table>
+	
 	<br>
 	<hr>
 
