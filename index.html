@@ -292,24 +292,28 @@
 		  
 				<i> 
 					Aloha! While computer vision algorithms work well on some images, they often fail in others largely due to 
-					small size of objects and occlusions. Even though this is not a solved problem, far from it, 
+					small size of objects and occlusions. Even though this is not a solved problem, quite far from it, 
 					we believe our work is a significant step forward in solving 
-					the recognition of small and occluded objects.
+					the recognition of small and occluded objects. There has been some concurrent work on this subject as well. 
+					Specifically, see  <a href="https://arxiv.org/abs/2007.01755">MCAR</a>.
 				</i>
 
 				<br><br>
 
 				<i> 
-					This is because our appraoch aims to explicitly focus on context from neighbouring regions around objects. Also, our 
-					approach enables to learn a distribution of association across classes. Ideally to handle situations in-the-wild where 
+					This is because our appraoch aims to explicitly focus on context from neighbouring regions around objects. Further, 
+					our approach enables to learn a distribution of association across classes. Ideally to handle situations in-the-wild where 
 					only part of some object class is visible, but where us humans might readily use context to infer the classes presence.
 				</i>
 
 				<br><br>
 
 				<i>
-					There has been some concurrent work on this subject as well. 
-					Specifically, see  <a href="https://arxiv.org/abs/2007.01755">MCAR</a>.</i>
+					We have also explored this technique in our previous 
+					work <a href="https://arxiv.org/abs/2210.00923">Masked Supervised Learning for Semantic Segmentation (In BMVC 2022, Oral)</a> where we find that MSL trained 
+					models are significantly compute efficient, better segments ambiguous and small regions, and is shape aware as it predicts segmentation 
+					masks of heavily masked regions.
+				</i>
 
 				<br><br>
 
