@@ -4,10 +4,10 @@
 
 Hasib Zunair and A. Ben Hamza
 
-[[`Paper`](link)] [[`Project`](https://hasibzunair.github.io/msl-recognition/)] [[`Demo`](https://huggingface.co/spaces/hasibzunair/msl-recognition-demo)] [[`BibTeX`](#5-citation)]
+[[`Paper`](https://arxiv.org/abs/2310.18517)] [[`Project`](https://hasibzunair.github.io/msl-recognition/)] [[`Demo`](https://huggingface.co/spaces/hasibzunair/msl-recognition-demo)] [[`BibTeX`](#5-citation)]
 
 This is official code for our **WACV 2024 paper**:<br>
-[Learning to Recognize Occluded and Small Objects with Partial Inputs](Link)
+[Learning to Recognize Occluded and Small Objects with Partial Inputs](https://arxiv.org/abs/2310.18517)
 <br>
 
 ![MSL Design](./media/figure.png)

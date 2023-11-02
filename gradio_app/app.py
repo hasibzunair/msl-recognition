@@ -83,7 +83,7 @@ inputs = gr.inputs.Image(type="filepath", label="Input Image")
 # Define style
 title = "Learning to Recognize Occluded and Small Objects with Partial Inputs"
 description = codecs.open("description.html", "r", "utf-8").read()
-article = "<p style='text-align: center'><a href='https://arxiv.org/abs/1512.03385' target='_blank'>Learning to Recognize Occluded and Small Objects with Partial Inputs</a> | <a href='https://github.com/hasibzunair/msl-recognition' target='_blank'>Github Repo</a></p>"
+article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2310.18517' target='_blank'>Learning to Recognize Occluded and Small Objects with Partial Inputs</a> | <a href='https://github.com/hasibzunair/msl-recognition' target='_blank'>Github Repo</a></p>"
 
 voc_classes = ("aeroplane", "bicycle", "bird", "boat", "bottle",
            "bus", "car", "cat", "chair", "cow", "diningtable",
