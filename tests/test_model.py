@@ -38,22 +38,29 @@ if not os.path.exists("./temp/msl_c_coco.pth"):
 
 ### Tests
 
+
 def test_model_pretrained():
-    
+
     # VOC
     model = ResNet_CSRA(num_heads=1, lam=0.1, num_classes=20)
-    model.load_state_dict(torch.load("./temp/msl_c_voc.pth", map_location=torch.device("cpu")))
-    
+    model.load_state_dict(
+        torch.load("./temp/msl_c_voc.pth", map_location=torch.device("cpu"))
+    )
+
     # COCO
     model = ResNet_CSRA(num_heads=6, lam=0.4, num_classes=80)
-    model.load_state_dict(torch.load("./temp/msl_c_coco.pth", map_location=torch.device("cpu")))
+    model.load_state_dict(
+        torch.load("./temp/msl_c_coco.pth", map_location=torch.device("cpu"))
+    )
 
 
 def test_model_function():
 
     # load VOC pretrained model
     model = ResNet_CSRA(num_heads=1, lam=0.1, num_classes=20)
-    model.load_state_dict(torch.load("./temp/msl_c_voc.pth", map_location=torch.device("cpu")))
+    model.load_state_dict(
+        torch.load("./temp/msl_c_voc.pth", map_location=torch.device("cpu"))
+    )
     model.to(DEVICE)
     model.eval()
 
