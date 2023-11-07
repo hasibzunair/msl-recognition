@@ -1,0 +1,3 @@
+# requirements when running workflows
+pytest
+pillow==9.2.0
