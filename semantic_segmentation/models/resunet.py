@@ -3,6 +3,7 @@ import torch.nn as nn
 
 """Taken from https://github.com/rishikksh20/ResUnet/blob/master/core/res_unet.py"""
 
+
 class ResidualConv(nn.Module):
     def __init__(self, input_dim, output_dim, stride, padding):
         super(ResidualConv, self).__init__()
@@ -37,7 +38,7 @@ class Upsample(nn.Module):
 
     def forward(self, x):
         return self.upsample(x)
-    
+
 
 class ResUnet(nn.Module):
     def __init__(self, num_classes=1, channel=3, filters=[64, 128, 256, 512]):

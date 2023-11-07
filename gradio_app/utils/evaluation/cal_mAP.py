@@ -14,13 +14,13 @@ def json_map(cls_id, pred_json, ann_json, types):
         predict[i] = pred_json[i]["scores"][cls_id]
         target[i] = ann_json[i]["target"][cls_id]
 
-    if types == 'wider':
+    if types == "wider":
         tmp = np.where(target != 99)[0]
         predict = predict[tmp]
         target = target[tmp]
         num = len(tmp)
 
-    if types == 'voc07':
+    if types == "voc07":
         tmp = np.where(target != 0)[0]
         predict = predict[tmp]
         target = target[tmp]
@@ -28,29 +28,14 @@ def json_map(cls_id, pred_json, ann_json, types):
         target[neg_id] = 0
         num = len(tmp)
 
-
     tmp = np.argsort(-predict)
     target = target[tmp]
     predict = predict[tmp]
-
 
     pre, obj = 0, 0
     for i in range(num):
         if target[i] == 1:
             obj += 1.0
-            pre += obj / (i+1)
+            pre += obj / (i + 1)
     pre /= obj
     return pre
-
-
-
-
-
-
-
-
-
-
-
-
-

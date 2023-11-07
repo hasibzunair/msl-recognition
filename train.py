@@ -123,7 +123,7 @@ def val(i, args, model, test_loader, test_file):
     result_list = []
 
     for index, data in enumerate(tqdm(test_loader)):
-        
+
         # Get image and label
         img = data["img"].cuda()
         target = data["target"].cuda()

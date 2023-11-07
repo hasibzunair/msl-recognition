@@ -181,8 +181,11 @@ def main():
         # https://github.com/Alibaba-MIIL/TResNet/blob/master/MODEL_ZOO.md
         if args.tres:
             state = torch.load(args.tres)
-            filtered_dict = {k: v for k, v in state['model'].items() if
-                            (k in model.state_dict() and 'head.fc' not in k)}
+            filtered_dict = {
+                k: v
+                for k, v in state["model"].items()
+                if (k in model.state_dict() and "head.fc" not in k)
+            }
             model.load_state_dict(filtered_dict, strict=False)
             print(f"Loaded {args.tres} successfully!")
     # if args.model == "tresnet_l":
@@ -201,8 +204,11 @@ def main():
         # Load pretrained model, ./data/tresnet_xl_448.pth
         if args.tres:
             state = torch.load(args.tres)
-            filtered_dict = {k: v for k, v in state['model'].items() if
-                            (k in model.state_dict() and 'head.fc' not in k)}
+            filtered_dict = {
+                k: v
+                for k, v in state["model"].items()
+                if (k in model.state_dict() and "head.fc" not in k)
+            }
             model.load_state_dict(filtered_dict, strict=False)
             print(f"Loaded {args.tres} successfully!")
 

@@ -6,6 +6,7 @@ import numpy as np
 
 """Helper functions and classes"""
 
+
 def unnormalize(tensor, mean, std):
     for t, m, s in zip(tensor, mean, std):
         t.mul_(s).add_(m)
@@ -19,19 +20,20 @@ def mkdir_if_missing(directory):
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
-                
+
 
 class Logger(object):
     """
     Write console output to external text file.
     Code imported from https://github.com/Cysu/open-reid/blob/master/reid/utils/logging.py.
     """
+
     def __init__(self, fpath=None):
         self.console = sys.stdout
         self.file = None
         if fpath is not None:
             mkdir_if_missing(os.path.dirname(fpath))
-            self.file = open(fpath, 'w')
+            self.file = open(fpath, "w")
 
     def __del__(self):
         self.close()

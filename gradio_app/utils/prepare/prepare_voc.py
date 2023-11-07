@@ -5,11 +5,28 @@ import numpy as np
 import xml.dom.minidom as XML
 
 
-
-voc_cls_id = {"aeroplane":0, "bicycle":1, "bird":2, "boat":3, "bottle":4,
-               "bus":5, "car":6, "cat":7, "chair":8, "cow":9,
-               "diningtable":10, "dog":11, "horse":12, "motorbike":13, "person":14,
-               "pottedplant":15, "sheep":16, "sofa":17, "train":18, "tvmonitor":19}
+voc_cls_id = {
+    "aeroplane": 0,
+    "bicycle": 1,
+    "bird": 2,
+    "boat": 3,
+    "bottle": 4,
+    "bus": 5,
+    "car": 6,
+    "cat": 7,
+    "chair": 8,
+    "cow": 9,
+    "diningtable": 10,
+    "dog": 11,
+    "horse": 12,
+    "motorbike": 13,
+    "person": 14,
+    "pottedplant": 15,
+    "sheep": 16,
+    "sofa": 17,
+    "train": 18,
+    "tvmonitor": 19,
+}
 
 
 def get_label(data_path):
@@ -23,7 +40,7 @@ def get_label(data_path):
     for i in os.listdir(xml_paths):
         if not i.endswith(".xml"):
             continue
-        s_name = i.split('.')[0] + ".txt"
+        s_name = i.split(".")[0] + ".txt"
         s_dir = os.path.join(save_dir, s_name)
         xml_path = os.path.join(xml_paths, i)
         DomTree = XML.parse(xml_path)
@@ -35,11 +52,11 @@ def get_label(data_path):
         difi_tag = []
         for obj in obj_all:
             # get the classes
-            obj_name = obj.getElementsByTagName('name')[0]
+            obj_name = obj.getElementsByTagName("name")[0]
             one_class = obj_name.childNodes[0].data
             cls.append(voc_cls_id[one_class])
 
-            difficult = obj.getElementsByTagName('difficult')[0]
+            difficult = obj.getElementsByTagName("difficult")[0]
             difi_tag.append(difficult.childNodes[0].data)
 
         for i, c in enumerate(cls):
@@ -59,7 +76,7 @@ def transdifi(data_path):
     f_trainval = f_train + f_val
     f_test = open(os.path.join(id_dirs, "test.txt"), "r")
 
-    trainval_id =  np.sort([int(line.strip()) for line in f_trainval]).tolist()
+    trainval_id = np.sort([int(line.strip()) for line in f_trainval]).tolist()
     test_id = [int(line.strip()) for line in f_test]
     trainval_data = []
     test_data = []
@@ -71,7 +88,7 @@ def transdifi(data_path):
 
     # binary label
     # 0 means negative
-    # +1 means positive 
+    # +1 means positive
 
     # we use binary labels in our implementation
 
@@ -83,7 +100,7 @@ def transdifi(data_path):
             diffi_tag = []
 
             for line in f.readlines():
-                cls, tag = map(int, line.strip().split(','))
+                cls, tag = map(int, line.strip().split(","))
                 classes.append(cls)
                 diffi_tag.append(tag)
 
@@ -101,26 +118,28 @@ def transdifi(data_path):
                             target[i] = 1
                 else:
                     continue
-            img_path = os.path.join(img_dir, item.split('.')[0]+".jpg")
+            img_path = os.path.join(img_dir, item.split(".")[0] + ".jpg")
 
-            if int(item.split('.')[0]) in trainval_id:
-                target[target == -1] = 0  # from ternary to binary by treating difficult as negatives
-                data = {"target": target.tolist(), "img_path": img_path}      
+            if int(item.split(".")[0]) in trainval_id:
+                target[
+                    target == -1
+                ] = 0  # from ternary to binary by treating difficult as negatives
+                data = {"target": target.tolist(), "img_path": img_path}
                 trainval_data.append(data)
-            if int(item.split('.')[0]) in test_id:
-                data = {"target": target.tolist(), "img_path": img_path}      
+            if int(item.split(".")[0]) in test_id:
+                data = {"target": target.tolist(), "img_path": img_path}
                 test_data.append(data)
 
     json.dump(trainval_data, open("data/voc07/trainval_voc07.json", "w"))
     json.dump(test_data, open("data/voc07/test_voc07.json", "w"))
     print("VOC07 data preparing finished!")
     print("data/voc07/trainval_voc07.json data/voc07/test_voc07.json")
-    
+
     # remove label cash
     for item in os.listdir(label_dir):
         os.remove(os.path.join(label_dir, item))
     os.rmdir(label_dir)
-    
+
 
 # We treat difficult classes in trainval_data as negtive while ignore them in test_data
 # The ignoring operation can be automatically done during evaluation (testing).
@@ -128,21 +147,26 @@ def transdifi(data_path):
 # which is the following format:
 # [item1, item2, item3, ......,]
 # item1 = {
-#      "target": 
-#      "img_path":      
+#      "target":
+#      "img_path":
 # }
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # Usage: --data_path /your/dataset/path/VOCdevkit
-    parser.add_argument("--data_path", default="Dataset/VOCdevkit/", type=str, help="The absolute path of VOCdevkit")
+    parser.add_argument(
+        "--data_path",
+        default="Dataset/VOCdevkit/",
+        type=str,
+        help="The absolute path of VOCdevkit",
+    )
     args = parser.parse_args()
 
     if not os.path.exists("data/voc07"):
         os.makedirs("data/voc07")
-    
-    if 'VOCdevkit' not in args.data_path:
-        print("WARNING: please include \'VOCdevkit\' str in your args.data_path")
+
+    if "VOCdevkit" not in args.data_path:
+        print("WARNING: please include 'VOCdevkit' str in your args.data_path")
         # exit()
 
     get_label(args.data_path)

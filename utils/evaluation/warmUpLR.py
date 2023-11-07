@@ -7,5 +7,7 @@ class WarmUpLR(torch.optim.lr_scheduler._LRScheduler):
         super().__init__(optimizer, last_epoch=last_epoch)
 
     def get_lr(self):
-        return [base_lr * self.last_epoch / (self.total_iters + 1e-8) for base_lr in self.base_lrs]
-
+        return [
+            base_lr * self.last_epoch / (self.total_iters + 1e-8)
+            for base_lr in self.base_lrs
+        ]

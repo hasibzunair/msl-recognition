@@ -7,34 +7,132 @@ from .cal_mAP import json_map
 from .cal_PR import json_metric, metric, json_metric_top3
 
 
-voc_classes = ("aeroplane", "bicycle", "bird", "boat", "bottle",
-           "bus", "car", "cat", "chair", "cow", "diningtable",
-           "dog", "horse", "motorbike", "person", "pottedplant",
-           "sheep", "sofa", "train", "tvmonitor")
-coco_classes = ('person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
-               'train', 'truck', 'boat', 'traffic_light', 'fire_hydrant',
-               'stop_sign', 'parking_meter', 'bench', 'bird', 'cat', 'dog',
-               'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe',
-               'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
-               'skis', 'snowboard', 'sports_ball', 'kite', 'baseball_bat',
-               'baseball_glove', 'skateboard', 'surfboard', 'tennis_racket',
-               'bottle', 'wine_glass', 'cup', 'fork', 'knife', 'spoon', 'bowl',
-               'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot',
-               'hot_dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
-               'potted_plant', 'bed', 'dining_table', 'toilet', 'tv', 'laptop',
-               'mouse', 'remote', 'keyboard', 'cell_phone', 'microwave',
-               'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock',
-               'vase', 'scissors', 'teddy_bear', 'hair_drier', 'toothbrush')
+voc_classes = (
+    "aeroplane",
+    "bicycle",
+    "bird",
+    "boat",
+    "bottle",
+    "bus",
+    "car",
+    "cat",
+    "chair",
+    "cow",
+    "diningtable",
+    "dog",
+    "horse",
+    "motorbike",
+    "person",
+    "pottedplant",
+    "sheep",
+    "sofa",
+    "train",
+    "tvmonitor",
+)
+coco_classes = (
+    "person",
+    "bicycle",
+    "car",
+    "motorcycle",
+    "airplane",
+    "bus",
+    "train",
+    "truck",
+    "boat",
+    "traffic_light",
+    "fire_hydrant",
+    "stop_sign",
+    "parking_meter",
+    "bench",
+    "bird",
+    "cat",
+    "dog",
+    "horse",
+    "sheep",
+    "cow",
+    "elephant",
+    "bear",
+    "zebra",
+    "giraffe",
+    "backpack",
+    "umbrella",
+    "handbag",
+    "tie",
+    "suitcase",
+    "frisbee",
+    "skis",
+    "snowboard",
+    "sports_ball",
+    "kite",
+    "baseball_bat",
+    "baseball_glove",
+    "skateboard",
+    "surfboard",
+    "tennis_racket",
+    "bottle",
+    "wine_glass",
+    "cup",
+    "fork",
+    "knife",
+    "spoon",
+    "bowl",
+    "banana",
+    "apple",
+    "sandwich",
+    "orange",
+    "broccoli",
+    "carrot",
+    "hot_dog",
+    "pizza",
+    "donut",
+    "cake",
+    "chair",
+    "couch",
+    "potted_plant",
+    "bed",
+    "dining_table",
+    "toilet",
+    "tv",
+    "laptop",
+    "mouse",
+    "remote",
+    "keyboard",
+    "cell_phone",
+    "microwave",
+    "oven",
+    "toaster",
+    "sink",
+    "refrigerator",
+    "book",
+    "clock",
+    "vase",
+    "scissors",
+    "teddy_bear",
+    "hair_drier",
+    "toothbrush",
+)
 wider_classes = (
-                "Male","longHair","sunglass","Hat","Tshiirt","longSleeve","formal",
-                "shorts","jeans","longPants","skirt","faceMask", "logo","stripe")
+    "Male",
+    "longHair",
+    "sunglass",
+    "Hat",
+    "Tshiirt",
+    "longSleeve",
+    "formal",
+    "shorts",
+    "jeans",
+    "longPants",
+    "skirt",
+    "faceMask",
+    "logo",
+    "stripe",
+)
 
 class_dict = {
     "voc07": voc_classes,
     "coco": coco_classes,
     "wider": wider_classes,
 }
-
 
 
 def evaluation(result, types, ann_path):
@@ -53,6 +151,7 @@ def evaluation(result, types, ann_path):
     print("CP: {:4f}, CR: {:4f}, CF1 :{:4F}".format(CP, CR, CF1))
     print("OP: {:4f}, OR: {:4f}, OF1 {:4F}".format(OP, OR, OF1))
 
+
 # I added it here
 class WarmUpLR(torch.optim.lr_scheduler._LRScheduler):
     def __init__(self, optimizer, total_iters, last_epoch=-1):
@@ -60,5 +159,7 @@ class WarmUpLR(torch.optim.lr_scheduler._LRScheduler):
         super().__init__(optimizer, last_epoch=last_epoch)
 
     def get_lr(self):
-        return [base_lr * self.last_epoch / (self.total_iters + 1e-8) for base_lr in self.base_lrs]
-
+        return [
+            base_lr * self.last_epoch / (self.total_iters + 1e-8)
+            for base_lr in self.base_lrs
+        ]

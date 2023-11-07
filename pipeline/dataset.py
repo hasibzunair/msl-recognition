@@ -1,6 +1,6 @@
 import json
 import glob
-import random 
+import random
 
 from torch.utils.data import Dataset
 from PIL import Image
@@ -117,7 +117,7 @@ def preprocess_scribble(img, img_size):
         [
             transforms.Resize(img_size, BICUBIC),
             transforms.CenterCrop(img_size),
-            #_convert_image_to_rgb,
+            # _convert_image_to_rgb,
             transforms.ToTensor(),
         ]
     )
@@ -128,6 +128,7 @@ class DataSetMaskSup(Dataset):
     """
     Data loader with scribbles.
     """
+
     def __init__(
         self,
         ann_files,
@@ -150,7 +151,7 @@ class DataSetMaskSup(Dataset):
 
         # scribbles
         self._scribbles_folder = "./datasets/SCRIBBLES"
-        
+
         # Type of masks to use, this is hardcoded since we find that high masks
         # work better in MSL. See paper for details.
 
@@ -208,14 +209,12 @@ class DataSetMaskSup(Dataset):
         img = Image.open(ann["img_path"]).convert("RGB")
 
         # get scribble
-        scribble_path = self._scribbles[
-                random.randint(0, 950)
-            ]
-        scribble = Image.open(scribble_path).convert('P')
+        scribble_path = self._scribbles[random.randint(0, 950)]
+        scribble = Image.open(scribble_path).convert("P")
         scribble = preprocess_scribble(scribble, self.img_size)
-        
-        scribble_t = (scribble > 0).float() # threshold to [0,1]
-        inv_scribble = (torch.max(scribble_t) - scribble_t) # inverted scribble      
+
+        scribble_t = (scribble > 0).float()  # threshold to [0,1]
+        inv_scribble = torch.max(scribble_t) - scribble_t  # inverted scribble
 
         if self.dataset == "wider":
             x, y, w, h = ann["bbox"]
@@ -230,7 +229,7 @@ class DataSetMaskSup(Dataset):
                 "target": torch.Tensor(ann["target"]),
                 "img": img_area,
                 "masked_img": masked_image,
-                #"scribble": inv_scribble,
+                # "scribble": inv_scribble,
             }
         else:  # voc and coco
             img = self.augment(img)
@@ -242,7 +241,7 @@ class DataSetMaskSup(Dataset):
                 "target": torch.Tensor(ann["target"]),
                 "img": img,
                 "masked_img": masked_image,
-                #"scribble": inv_scribble,
+                # "scribble": inv_scribble,
             }
 
         return message
