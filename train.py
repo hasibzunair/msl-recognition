@@ -23,7 +23,7 @@ from utils.evaluation.warmUpLR import WarmUpLR
 from helpers import Logger
 
 
-def Args():
+def get_argparser():
     parser = argparse.ArgumentParser(description="settings")
     # configuration
     parser.add_argument("--exp_name", default="baseline")
@@ -160,7 +160,7 @@ def main():
     torch.backends.cudnn.benchmark = True
 
     ########## Get arguments ##########
-    args = Args()
+    args = get_argparser()
 
     # create log folder
     if not os.path.exists("checkpoint/"):
