@@ -10,8 +10,6 @@ This is official code for our **WACV 2024 paper**:<br>
 [Learning to Recognize Occluded and Small Objects with Partial Inputs](https://arxiv.org/abs/2310.18517)
 <br>
 
-![MSL Design](./media/figure.png)
-
 We propose a learning algorithm to explicitly focus on context from neighbouring regions around objects and learn a distribution of association across classes. Ideally to handle situations in-the-wild where only part of some object class is visible, but where us humans might readily use context to infer the classes presence.
 
 ## 1. Specification of dependencies
@@ -63,7 +61,7 @@ python utils/prepare/prepare_coco.py --data_path  datasets/COCO2014
 python utils/prepare/prepare_wider.py --data_path datasets/WIDER
 ```
 
-which will automatically result in annotation json files in *./data/voc07*, *./data/coco* and *./data/wider*
+which will automatically result in annotation json files in *./data/voc07*, *./data/coco* and *./data/wider*. Finally, download the masks of random streaks and holes of arbitrary shapes from [SCRIBBLES.zip](https://github.com/hasibzunair/masksup-segmentation/releases/download/v1.0/SCRIBBLES.zip) and put in inside `datasets` folder.
 
 ### VOC2007 training
 
