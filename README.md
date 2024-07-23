@@ -10,6 +10,8 @@ This is official code for our **WACV 2024 paper**:<br>
 [Learning to Recognize Occluded and Small Objects with Partial Inputs](https://arxiv.org/abs/2310.18517)
 <br>
 
+![MSL Design](./media/figure.png)
+
 We propose a learning algorithm to explicitly focus on context from neighbouring regions around objects and learn a distribution of association across classes. Ideally to handle situations in-the-wild where only part of some object class is visible, but where us humans might readily use context to infer the classes presence.
 
 ## 1. Specification of dependencies
